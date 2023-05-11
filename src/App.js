@@ -5,11 +5,11 @@ import HookForm from './components/HookForm';
 
 const App = () => {
   return (
- <browserRouter>
+ <BrowserRouter>
   <Routes>
     <Route path="/" element={<HookForm />}/>
   </Routes>
- </browserRouter>
+ </BrowserRouter>
   );
 }
 

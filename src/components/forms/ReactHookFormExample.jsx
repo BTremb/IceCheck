@@ -14,8 +14,7 @@ const cardStyle = {
 }
 
 const ReactHookFormExample = () =>  {
-  const { control, handleSubmit, watch, formState: { errors } } = useForm();
-  const [showLastName, setShowLastName] = useState(false);
+  const { control, handleSubmit, formState: { errors } } = useForm();
   const [dataOutput, setDataOutput] = useState();
   
   const onSubmit = (data) => {
@@ -29,7 +28,7 @@ const ReactHookFormExample = () =>  {
             <TextInputField name="email" label="Email" control={control} errors={errors} required />
             <TextInputField name="password" label="Password" control={control} errors={errors} required />
             <TextInputField name="firstName" label="First Name" control={control} errors={errors} />
-                <TextInputField name="lastName" label="Last Name" control={control} errors={errors} />
+            <TextInputField name="lastName" label="Last Name" control={control} errors={errors} />
             <Button variant="contained" color="primary" type="submit">Submit</Button>
         </form>
         <Box>

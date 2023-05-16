@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MapView from './components/MapView';
+import Nav from './components/Nav';
 
 const App = () => {
   return (
  <BrowserRouter>
   <Routes>
-    <Route path="/" element={<MapView />}/>
+    <Route path="/" element={<Nav />}/>
   </Routes>
  </BrowserRouter>
   );

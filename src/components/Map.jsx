@@ -80,16 +80,13 @@ const MapContainer = (props) => {
   return (
     <Map
       google={props.google}
-      initialCenter={{ lat: 49.2827, lng: -56.1126 }} // Center on Newfoundland
+      initialCenter={{ lat: 49.2827, lng: -56.1126 }}
       zoom={8}
       styles={mapStyles}
       restriction={restriction}
     />
   );
 };
-
-
-
 
 
 export default GoogleApiWrapper({

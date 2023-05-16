@@ -1,14 +1,12 @@
 import React from 'react';
 import MapContainer from './Map';
 
-const App = () => {
+const MapView = () => {
   return (
     <div>
-      {/* Other components */}
       <MapContainer />
-      {/* Other components */}
     </div>
   );
 };
 
-export default App;
+export default MapView;

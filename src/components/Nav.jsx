@@ -3,7 +3,7 @@ import NavBar from './NavBar';
 import MapView from './MapView';
 import ListView from './ListView';
 
-const App = () => {
+const Nav = () => {
   const [currentView, setCurrentView] = React.useState('map');
 
   const handleViewChange = (view) => {
@@ -19,4 +19,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Nav;

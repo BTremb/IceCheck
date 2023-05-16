@@ -1,19 +1,18 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from './components/Nav2';
-import MapView from './components/MapView';
+import NavBar from './components/NavBar';
+import MapView from './components/Map/MapView';
 import ListView from './components/ListView';
 
 const App = () => {
   return (
  <BrowserRouter>
-  <NavBar>
+  <NavBar />
   <Routes>
     <Route path="/" element={<MapView />}/>
     <Route path="/ListView" element={<ListView />}/>
   </Routes>
-  </NavBar>
  </BrowserRouter>
   );
 }

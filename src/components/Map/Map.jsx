@@ -1,7 +1,7 @@
 import React from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
-const MapContainer = (props) => {
+const MapContainer = () => {
   const mapStyles = [
     {
       stylers: [
@@ -78,19 +78,18 @@ const MapContainer = (props) => {
   };
 
   return (
-    <Map
-      google={props.google}
-      initialCenter={{ lat: 49.2827, lng: -56.1126 }}
-      zoom={8}
-      styles={mapStyles}
-      restriction={restriction}
-    />
+    <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU">
+      <GoogleMap
+        mapContainerStyle={{ height: "calc(100vh - 4rem)", width: "100%" }}
+        center={{ lat: 49.2827, lng: -56.1126 }}
+        zoom={8}
+        options={{
+          styles: mapStyles,
+          restriction: restriction
+        }}
+      />
+    </LoadScript>
   );
 };
 
-
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU',
-})(MapContainer);
-
-
+export default MapContainer;

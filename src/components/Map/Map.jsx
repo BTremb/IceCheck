@@ -62,7 +62,8 @@ const MapContainer = () => {
       featureType: 'water',
       elementType: 'labels',
       stylers: [
-        { visibility: 'on' },
+        { color: '#000000',
+          visibility: 'on' },
       ],
     },
   ];

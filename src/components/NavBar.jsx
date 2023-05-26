@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { Modal, Typography, Box } from '@mui/material';
 
-const style = {
+const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -28,8 +28,8 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [flipFlop, setFlipFlop] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const handleClose = () => setOpenModal(false);
   const buttonClick = (page) => {
-    console.log(window.location.pathname,page);
     if (page !== window.location.pathname){
       setFlipFlop(!flipFlop);
       navigate(page);
@@ -78,17 +78,19 @@ const NavBar = () => {
       >
         Login
       </Button>
+
       <Modal
   open={openModal}
+  onClose={handleClose}
   aria-labelledby="modal-modal-title"
   aria-describedby="modal-modal-description"
 >
-  <Box sx={style}>
+  <Box sx={modalStyle}>
     <Typography id="modal-modal-title" variant="h6" component="h2">
-      Text in a modal
+      Login
     </Typography>
     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-    
+    hello
     </Typography>
   </Box>
 </Modal>
@@ -98,11 +100,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
-
-
-
-
-
-

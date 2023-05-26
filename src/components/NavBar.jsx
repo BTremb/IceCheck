@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { Modal, Typography, Box } from '@mui/material';
+import ReactHookFormExample from './forms/ReactHookFormExample';
 
 const modalStyle = {
   position: 'absolute',
@@ -81,16 +82,14 @@ const NavBar = () => {
 
       <Modal
   open={openModal}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
+  onClose={handleClose}>
+
   <Box sx={modalStyle}>
     <Typography id="modal-modal-title" variant="h6" component="h2">
       Login
     </Typography>
     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-    hello
+    <ReactHookFormExample />
     </Typography>
   </Box>
 </Modal>

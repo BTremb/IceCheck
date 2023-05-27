@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { Modal, Typography, Box } from '@mui/material';
+import { Modal, Typography, Box, Card } from '@mui/material';
 import ReactHookFormExample from './forms/ReactHookFormExample';
 
 const modalStyle = {
@@ -9,11 +9,22 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 250,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+};
+const contentStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 const NavBar = () => {
@@ -80,17 +91,17 @@ const NavBar = () => {
         Login
       </Button>
 
-      <Modal
+  <Modal
   open={openModal}
   onClose={handleClose}>
 
   <Box sx={modalStyle}>
-    <Typography id="modal-modal-title" variant="h6" component="h2">
+    <Typography variant="h6" component="h2">
       Login
     </Typography>
-    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+    <Box sx={contentStyle}>
     <ReactHookFormExample />
-    </Typography>
+    </Box>
   </Box>
 </Modal>
 

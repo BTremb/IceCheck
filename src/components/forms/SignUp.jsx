@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import TextInputField from './TextInputField';
 import { Box, Button, Card, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 const cardStyle = {
     padding: '1rem',
@@ -16,22 +15,16 @@ const cardStyle = {
     justifyContent: 'center',
 }
 
-const ReactHookFormExample = () =>  {
-  const { control, handleSubmit, formState: { errors } } = useForm();
-  const [dataOutput, setDataOutput] = useState();
-  const [showSignUpForm, setShowSignUpForm] = useState(false);
-  
-  const onSubmit = (data) => {
-    console.log({data})
-    setDataOutput(JSON.stringify(data, null, 2))
-  }
+const SignUp = () =>  {
+    const { control, handleSubmit, formState: { errors } } = useForm();
+    const [dataOutput, setDataOutput] = useState();
 
-  const handleLinkClick = () => {
-    setShowSignUpForm(true);
-  }
+    const onSubmit = (data) => {
+        console.log({data})
+        setDataOutput(JSON.stringify(data, null, 2))
+}
 
-  return (
-  
+return (
     <Card sx={cardStyle}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box mb={1.5}>
@@ -40,10 +33,13 @@ const ReactHookFormExample = () =>  {
           <Box mb={1.5}>
             <TextInputField name="password" label="Password" control={control} errors={errors} required/>
             </Box>
+            <Box mb={1.5}>
+            <TextInputField name="UserName" label="Username" control={control} errors={errors} required/>
+           </Box>
             <Button variant="contained" color="primary" type="submit">Submit</Button>
         </form>
     </Card>
-  )
-  
+)
 }
-export default ReactHookFormExample;
+
+export default SignUp;

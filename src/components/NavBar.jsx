@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import { Modal, Typography, Box, Card } from '@mui/material';
+import { Button, Modal, Typography, Box, Link } from '@mui/material';
 import ReactHookFormExample from './forms/ReactHookFormExample';
+import SignUp from './forms/SignUp';
 
 const modalStyle = {
   position: 'absolute',
@@ -40,13 +40,22 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [flipFlop, setFlipFlop] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const handleClose = () => setOpenModal(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  
   const buttonClick = (page) => {
     if (page !== window.location.pathname){
       setFlipFlop(!flipFlop);
       navigate(page);
     }
-  
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+    setShowSignUp(false); // Reset to login when the modal is closed
+  };
+
+  const handleSignUpClick = () => {
+    setShowSignUp(true);
   };
 
   const buttonStylesMapView = {
@@ -97,14 +106,42 @@ const NavBar = () => {
 
   <Box sx={modalStyle}>
     <Typography variant="h6" component="h2">
-      Login
+      {showSignUp? 'Sign Up' : 'Login'}
     </Typography>
     <Box sx={contentStyle}>
+      {showSignUp? (
+        <SignUp />
+      ) : (
     <ReactHookFormExample />
-    </Box>
-  </Box>
-</Modal>
-
+      )}
+       <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
+              {showSignUp ? (
+                <Typography variant="body2">
+                  Already have an account?{' '}
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => setShowSignUp(false)}
+                  >
+                    Login
+                  </Link>
+                </Typography>
+              ) : (
+                <Typography variant="body2">
+                  Don't have an account?{' '}
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={handleSignUpClick}
+                  >
+                    Sign Up
+                    </Link>
+                </Typography>
+              )}
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
     </nav>
   );
 };

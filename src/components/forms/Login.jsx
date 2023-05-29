@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import TextInputField from './TextInputField';
 import { Box, Button, Card, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 const cardStyle = {
     padding: '1rem',
@@ -19,15 +18,11 @@ const cardStyle = {
 const ReactHookFormExample = () =>  {
   const { control, handleSubmit, formState: { errors } } = useForm();
   const [dataOutput, setDataOutput] = useState();
-  const [showSignUpForm, setShowSignUpForm] = useState(false);
+
   
   const onSubmit = (data) => {
     console.log({data})
     setDataOutput(JSON.stringify(data, null, 2))
-  }
-
-  const handleLinkClick = () => {
-    setShowSignUpForm(true);
   }
 
   return (

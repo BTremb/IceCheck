@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Typography, Box, Link } from '@mui/material';
-import ReactHookFormExample from './forms/ReactHookFormExample';
+import Login from './forms/Login';
 import SignUp from './forms/SignUp';
 
 const modalStyle = {
@@ -112,7 +112,7 @@ const NavBar = () => {
       {showSignUp? (
         <SignUp />
       ) : (
-    <ReactHookFormExample />
+       <Login />
       )}
        <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
               {showSignUp ? (

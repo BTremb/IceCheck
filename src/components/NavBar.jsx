@@ -105,9 +105,6 @@ const NavBar = () => {
   onClose={handleClose}>
 
   <Box sx={modalStyle}>
-    <Typography variant="h6" component="h2">
-      {showSignUp? 'Sign Up' : 'Login'}
-    </Typography>
     <Box sx={contentStyle}>
       {showSignUp? (
         <SignUp />

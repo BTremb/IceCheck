@@ -1,5 +1,7 @@
-import React from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import React, { useRef, useState } from 'react';
+import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
+
+const libraries = ['places'];
 
 const MapContainer = () => {
   const mapStyles = [
@@ -78,15 +80,59 @@ const MapContainer = () => {
     strictBounds: true,
   };
 
+
+ 
+
+  const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
+  const [mapZoom, setMapZoom] = useState(8);
+
+  const mapRef = useRef(null);
+  const autocompleteRef = useRef(null);
+
+  const handlePlaceSelect = () => {
+    const autocomplete = autocompleteRef.current;
+
+    if (autocomplete && autocomplete.getPlace()) {
+      const place = autocomplete.getPlace();
+      const { geometry } = place;
+
+      if (geometry && geometry.location) {
+        const { lat, lng } = geometry.location;
+
+        setMapCenter({ lat: lat(), lng: lng() });
+        setMapZoom(14); 
+      }
+    }
+  };
+
   return (
-    <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU">
+    <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
+      <Autocomplete
+        onLoad={(autocomplete) => {
+          autocompleteRef.current = autocomplete;
+        }}
+        onPlaceChanged={handlePlaceSelect}
+      >
+        <input
+          type="text"
+          placeholder="Search for a location"
+          style={{
+            position: 'absolute',
+            top: '1rem',
+            left: '1rem',
+            zIndex: 1,
+            padding: '0.5rem',
+          }}
+        />
+      </Autocomplete>
       <GoogleMap
-        mapContainerStyle={{ height: "calc(100vh - 4rem)", width: "100%" }}
-        center={{ lat: 49.2827, lng: -56.1126 }}
-        zoom={8}
+        ref={mapRef}
+        mapContainerStyle={{ height: 'calc(100vh - 4rem)', width: '100%' }}
+        center={mapCenter}
+        zoom={mapZoom}
         options={{
           styles: mapStyles,
-          restriction: restriction
+          restriction: restriction,
         }}
       />
     </LoadScript>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState , useEffect } from 'react';
+import { useNavigate , useLocation } from 'react-router-dom';
 import { Button, Modal, Typography, Box, Link } from '@mui/material';
 import Login from './forms/Login';
 import SignUp from './forms/SignUp';
@@ -38,9 +38,14 @@ const NavBar = () => {
   };
 
   const navigate = useNavigate();
+  const location = useLocation();
   const [flipFlop, setFlipFlop] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+
+  useEffect(() => {
+    setOpenModal(false); // Close the modal when the URL changes
+  }, [location.pathname]);
   
   const buttonClick = (page) => {
     if (page !== window.location.pathname){
@@ -51,7 +56,7 @@ const NavBar = () => {
 
   const handleClose = () => {
     setOpenModal(false);
-    setShowSignUp(false); // Reset to login when the modal is closed
+    setShowSignUp(false);
   };
 
   const handleSignUpClick = () => {

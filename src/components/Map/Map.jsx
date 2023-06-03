@@ -70,15 +70,15 @@ const MapContainer = () => {
     },
   ];
 
-  const restriction = {
-    latLngBounds: {
-      north: 51.7090,
-      south: 46.5369,
-      west: -60.3893,
-      east: -52.3076,
-    },
-    strictBounds: true,
-  };
+  // const restriction = {
+  //   latLngBounds: {
+  //     north: 51.7090,
+  //     south: 46.5369,
+  //     west: -60.3893,
+  //     east: -52.3076,
+  //   },
+  //   strictBounds: true,
+  // };
 
 
  
@@ -98,9 +98,9 @@ const MapContainer = () => {
 
       if (geometry && geometry.location) {
         const { lat, lng } = geometry.location;
-
+        console.log(lat(), lng());
         setMapCenter({ lat: lat(), lng: lng() });
-        setMapZoom(14); 
+        setMapZoom(16); 
       }
     }
   };
@@ -132,7 +132,7 @@ const MapContainer = () => {
         zoom={mapZoom}
         options={{
           styles: mapStyles,
-          restriction: restriction,
+          // restriction: restriction,
         }}
       />
     </LoadScript>

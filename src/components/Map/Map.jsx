@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { GoogleMap, LoadScript, Autocomplete } from '@react-google-maps/api';
+import React, { useRef, useState, useEffect } from 'react';
+import { GoogleMap, LoadScript, Autocomplete, Marker } from '@react-google-maps/api';
 
 const libraries = ['places'];
 
@@ -81,62 +81,103 @@ const MapContainer = () => {
   // };
 
 
- 
 
-  const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
-  const [mapZoom, setMapZoom] = useState(8);
-
-  const mapRef = useRef(null);
-  const autocompleteRef = useRef(null);
-
-  const handlePlaceSelect = () => {
-    const autocomplete = autocompleteRef.current;
-
-    if (autocomplete && autocomplete.getPlace()) {
-      const place = autocomplete.getPlace();
-      const { geometry } = place;
-
-      if (geometry && geometry.location) {
-        const { lat, lng } = geometry.location;
-        console.log(lat(), lng());
-        setMapCenter({ lat: lat(), lng: lng() });
-        setMapZoom(16); 
+  
+    const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
+    const [mapZoom, setMapZoom] = useState(8);
+    const [markerPosition, setMarkerPosition] = useState(null);
+  
+    const mapRef = useRef(null);
+    const autocompleteRef = useRef(null);
+  
+    useEffect(() => {
+      // Load markers from local storage when the component mounts
+      const savedMarkerPosition = localStorage.getItem('markerPosition');
+      if (savedMarkerPosition) {
+        setMarkerPosition(JSON.parse(savedMarkerPosition));
       }
-    }
-  };
-
-  return (
-    <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
-      <Autocomplete
-        onLoad={(autocomplete) => {
-          autocompleteRef.current = autocomplete;
-        }}
-        onPlaceChanged={handlePlaceSelect}
-      >
-        <input
-          type="text"
-          placeholder="Search for a location"
-          style={{
-            position: 'absolute',
-            top: '1rem',
-            left: '1rem',
-            zIndex: 1,
-            padding: '0.5rem',
+    }, []);
+  
+    const handlePlaceSelect = () => {
+      const autocomplete = autocompleteRef.current;
+  
+      if (autocomplete && autocomplete.getPlace()) {
+        const place = autocomplete.getPlace();
+  
+        // Use PlaceService to check if the selected place is a water feature
+        const mapInstance = mapRef.current;
+        const placeService = new window.google.maps.places.PlacesService(mapInstance);
+  
+        placeService.getDetails(
+          {
+            placeId: place.place_id,
+            fields: ['name', 'types'],
+          },
+          (result, status) => {
+            if (status === 'OK' && result && result.types) {
+              const isWaterFeature = result.types.includes('natural_feature') || result.types.includes('water');
+  
+              if (isWaterFeature) {
+                const { geometry } = place;
+  
+                if (geometry && geometry.location) {
+                  const { lat, lng } = geometry.location;
+                  setMapCenter({ lat: lat(), lng: lng() });
+                  setMapZoom(16);
+                  const newMarkerPosition = { lat: lat(), lng: lng() };
+                  setMarkerPosition(newMarkerPosition);
+  
+                  // Save the marker position to local storage
+                  localStorage.setItem('markerPosition', JSON.stringify(newMarkerPosition));
+                }
+              } else {
+                alert('Please select a water feature.'); // Show an error message
+              }
+            } else {
+              console.error('Place service failed due to:', status);
+            }
+          }
+        );
+      }
+    };
+  
+    return (
+      <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
+        <Autocomplete
+          onLoad={(autocomplete) => {
+            autocompleteRef.current = autocomplete;
           }}
-        />
-      </Autocomplete>
-      <GoogleMap
-        ref={mapRef}
-        mapContainerStyle={{ height: 'calc(100vh - 4rem)', width: '100%' }}
-        center={mapCenter}
-        zoom={mapZoom}
-        options={{
-          styles: mapStyles,
-          // restriction: restriction,
-        }}
-      />
-    </LoadScript>
-  );
-};
+          onPlaceChanged={handlePlaceSelect}
+        >
+          <input
+            type="text"
+            placeholder="Search for a location"
+            style={{
+              position: 'absolute',
+              top: '1rem',
+              left: '1rem',
+              zIndex: 1,
+              padding: '0.5rem',
+            }}
+          />
+        </Autocomplete>
+        <GoogleMap
+          onLoad={(map) => {
+            mapRef.current = map;
+          }}
+          mapContainerStyle={{ height: 'calc(100vh - 4rem)', width: '100%' }}
+          center={mapCenter}
+          zoom={mapZoom}
+          options={{
+            styles: mapStyles,
+          }}
+        >
+          {markerPosition && <Marker position={markerPosition} />}
+        </GoogleMap>
+      </LoadScript>
+    );
+  };
+  
+  export default MapContainer;
+  
 
-export default MapContainer;

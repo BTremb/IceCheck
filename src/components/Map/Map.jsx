@@ -91,7 +91,6 @@ const MapContainer = () => {
     const autocompleteRef = useRef(null);
   
     useEffect(() => {
-      // Load markers from local storage when the component mounts
       const savedMarkerPosition = localStorage.getItem('markerPosition');
       if (savedMarkerPosition) {
         setMarkerPosition(JSON.parse(savedMarkerPosition));
@@ -103,8 +102,7 @@ const MapContainer = () => {
   
       if (autocomplete && autocomplete.getPlace()) {
         const place = autocomplete.getPlace();
-  
-        // Use PlaceService to check if the selected place is a water feature
+ 
         const mapInstance = mapRef.current;
         const placeService = new window.google.maps.places.PlacesService(mapInstance);
   
@@ -127,11 +125,11 @@ const MapContainer = () => {
                   const newMarkerPosition = { lat: lat(), lng: lng() };
                   setMarkerPosition(newMarkerPosition);
   
-                  // Save the marker position to local storage
+              
                   localStorage.setItem('markerPosition', JSON.stringify(newMarkerPosition));
                 }
               } else {
-                alert('Please select a water feature.'); // Show an error message
+                alert('Please select a water feature.'); 
               }
             } else {
               console.error('Place service failed due to:', status);

@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Autocomplete, Marker } from '@react-google-maps/api';
+import { Modal, Box } from '@mui/material';
+import UserUpdate from '../forms/UserUpdate';
 
 const libraries = ['places'];
 
@@ -80,12 +82,34 @@ const MapContainer = () => {
   //   strictBounds: true,
   // };
 
-
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 250,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  
+  };
+  const contentStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
 
   
     const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
     const [mapZoom, setMapZoom] = useState(8);
     const [markerPosition, setMarkerPosition] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
   
     const mapRef = useRef(null);
     const autocompleteRef = useRef(null);
@@ -138,6 +162,11 @@ const MapContainer = () => {
         );
       }
     };
+
+  
+    const handleClose = () => {
+      setOpenModal(false);
+    }
   
     return (
       <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
@@ -170,12 +199,24 @@ const MapContainer = () => {
             styles: mapStyles,
           }}
         >
-          {markerPosition && <Marker position={markerPosition} />}
+          {markerPosition && <Marker position={markerPosition}  onClick={() => setOpenModal(true)}/>}
+    
+         <Modal
+     open={openModal}
+     onClose={handleClose}>
+       <Box sx={modalStyle}>
+          <Box sx={contentStyle}>
+          <UserUpdate />
+          </Box>
+          </Box>
+       
+            
+         </Modal>
         </GoogleMap>
       </LoadScript>
+
     );
-  };
+        };
   
   export default MapContainer;
-  
-
+        

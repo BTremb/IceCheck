@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Box, Card, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import TextInputField from './TextInputField';
-import { Box, Button, Card, Typography } from '@mui/material';
-  import MapContainer from '../Map/Map';
+
 
 const cardStyle = {
   padding: '1rem',
@@ -16,25 +16,37 @@ const cardStyle = {
   justifyContent: 'center',
 };
 
-const UserUpdate = ({ latitude, longitude }) => {
-  const { control, handleSubmit, formState: { errors } } = useForm();
 
+const UserUpdate = () => {
+  const { control, handleSubmit, formState: { errors } } = useForm();
+   
+
+  useEffect(() => {
+    const savedMarkerPosition = localStorage.getItem('markerPosition');
+    if (savedMarkerPosition) {
+      const markerPosition = JSON.parse(savedMarkerPosition);
+      console.log(markerPosition);
+    }
+    
+  }, []);
 
   const onSubmit = (data) => {
     const { iceThickness, measurementMethod } = data;
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
-    const markerPosition = MapContainer(markerPosition);
+    const marker = localStorage.getItem('markerPosition');
+ 
+    
+
     const update = {
       iceThickness,
       measurementMethod,
       date,
       time,
-      markerPosition,
+      marker,
     };
-
-    // Save the user update with latitude and longitude
     saveUserUpdate(update);
+    console.log(update);
   };
 
   const saveUserUpdate = (update) => {
@@ -51,12 +63,12 @@ const UserUpdate = ({ latitude, longitude }) => {
     <Card sx={cardStyle}>
       <Box mb={2}>
         <Typography variant="h6" component="h2">
-          User Update
+          Update
         </Typography>
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box mb={1.5}>
-          <TextInputField name="iceThickness" label="Ice Thickness" control={control} errors={errors} required />
+        <TextInputField name="iceThickness" label="Ice Thickness (Centimeters)" control={control} errors={errors} required />
         </Box>
         <Box mb={1.5}>
           <TextInputField name="measurementMethod" label="Method of Measurement" control={control} errors={errors} required />
@@ -68,16 +80,15 @@ const UserUpdate = ({ latitude, longitude }) => {
           <Typography variant="body1" component="p">
             Time: {new Date().toLocaleTimeString()}
           </Typography>
-          <Typography variant="body1" component="p">
-            Latitude: {markerPosition}
-          </Typography>
+         
+      
         </Box>
         <Button variant="contained" color="primary" type="submit">
           Submit
         </Button>
       </form>
     </Card>
-  );
+  )
 };
 
 export default UserUpdate;

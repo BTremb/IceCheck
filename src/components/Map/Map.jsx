@@ -67,21 +67,10 @@ const MapContainer = () => {
       featureType: 'water',
       elementType: 'labels',
       stylers: [
-        { color: '#000000',
-          visibility: 'on' },
+        { color: '#000000', visibility: 'on' },
       ],
     },
   ];
-
-  // const restriction = {
-  //   latLngBounds: {
-  //     north: 51.7090,
-  //     south: 46.5369,
-  //     west: -60.3893,
-  //     east: -52.3076,
-  //   },
-  //   strictBounds: true,
-  // };
 
   const modalStyle = {
     position: 'absolute',
@@ -97,8 +86,8 @@ const MapContainer = () => {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-  
   };
+
   const contentStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -106,172 +95,175 @@ const MapContainer = () => {
     justifyContent: 'center',
   };
 
-  
-  
-    const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
-    const [mapZoom, setMapZoom] = useState(8);
-    const [markerPosition, setMarkerPosition] = useState(null);
-    const [openModal, setOpenModal] = useState(false);
-    const [showUserUpdate, setShowUserUpdate] = useState(false);
-    
-  
-    const mapRef = useRef(null);
-    const autocompleteRef = useRef(null);
-  
-    useEffect(() => {
-      const savedMarkerPosition = localStorage.getItem('markerPosition');
-      if (savedMarkerPosition) {
-        setMarkerPosition(JSON.parse(savedMarkerPosition));
-        setMarkerPosition(markerPosition);
-      }
-    }, []);
+  const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
+  const [mapZoom, setMapZoom] = useState(8);
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [showUserUpdate, setShowUserUpdate] = useState(false);
+  const [userPosts, setUserPosts] = useState([]);
 
+  const mapRef = useRef(null);
+  const autocompleteRef = useRef(null);
+
+  useEffect(() => {
     const savedMarkerPosition = localStorage.getItem('markerPosition');
     if (savedMarkerPosition) {
-      const markerPosition = JSON.parse(savedMarkerPosition);
-      console.log(markerPosition);
+      setMarkerPosition(JSON.parse(savedMarkerPosition));
+      setMapCenter(JSON.parse(savedMarkerPosition));
     }
-    
-    const handlePlaceSelect = () => {
-      const autocomplete = autocompleteRef.current;
+
+    const storedUserPosts = localStorage.getItem('userUpdates');
+    if (storedUserPosts) {
+      const parsedUserPosts = JSON.parse(storedUserPosts);
+      setUserPosts(parsedUserPosts);
+    }
+  }, []);
+
+  const handlePlaceSelect = () => {
+    const autocomplete = autocompleteRef.current;
   
-      if (autocomplete && autocomplete.getPlace()) {
-        const place = autocomplete.getPlace();
- 
-        const mapInstance = mapRef.current;
-        const placeService = new window.google.maps.places.PlacesService(mapInstance);
+    if (autocomplete && autocomplete.getPlace()) {
+      const place = autocomplete.getPlace();
   
-        placeService.getDetails(
-          {
-            placeId: place.place_id,
-            fields: ['name', 'types'],
-          },
-          (result, status) => {
-            if (status === 'OK' && result && result.types) {
-              const isWaterFeature = result.types.includes('natural_feature') || result.types.includes('water');
+      const mapInstance = mapRef.current;
+      const placeService = new window.google.maps.places.PlacesService(mapInstance);
   
-              if (isWaterFeature) {
-                const { geometry } = place;
+      placeService.getDetails(
+        {
+          placeId: place.place_id,
+          fields: ['name', 'types', 'geometry'],
+        },
+        (result, status) => {
+          if (status === 'OK' && result && result.types) {
+            const isWaterFeature = result.types.includes('natural_feature') || result.types.includes('water');
   
-                if (geometry && geometry.location) {
-                  const { lat, lng } = geometry.location;
-                  setMapCenter({ lat: lat(), lng: lng() });
-                  setMapZoom(16);
-                  const newMarkerPosition = { lat: lat(), lng: lng() };
-                  setMarkerPosition(newMarkerPosition);
+            if (isWaterFeature) {
+              const { geometry } = result;
   
-              
-                  localStorage.setItem('markerPosition', JSON.stringify(newMarkerPosition));
+              if (geometry && geometry.location) {
+                const { lat, lng } = geometry.location;
+                const newMarkerPosition = { lat: lat(), lng: lng() };
+                setMarkerPosition(newMarkerPosition);
+  
+                const bounds = new window.google.maps.LatLngBounds();
+                bounds.extend(newMarkerPosition);
+                mapInstance.fitBounds(bounds);
+
+                const maxZoom = 15;
+                const currentZoom = mapInstance.getZoom();
+                if (currentZoom > maxZoom) {
+                  mapInstance.setZoom(maxZoom);
                 }
-              } else {
-                alert('Please select a water feature.'); 
+  
+                localStorage.setItem('markerPosition', JSON.stringify(newMarkerPosition));
               }
             } else {
-              console.error('Place service failed due to:', status);
+              alert('Please select a water feature.');
             }
+          } else {
+            console.error('Place service failed due to:', status);
           }
-        );
-      }
-    };
-
-  
-    const handleClose = () => {
-      setOpenModal(false);
-      setShowUserUpdate(false);
+        }
+      );
     }
+  };
   
-    const handleUserUpdateClick = () => {
-      setShowUserUpdate(true);
-    };
-    return (
-      <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
-        <Autocomplete
-          onLoad={(autocomplete) => {
-            autocompleteRef.current = autocomplete;
+  const handleClose = () => {
+    setOpenModal(false);
+    setShowUserUpdate(false);
+  };
+
+  const handleUserUpdateClick = () => {
+    setShowUserUpdate(true);
+  };
+
+  return (
+    <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
+      <Autocomplete
+        onLoad={(autocomplete) => {
+          autocompleteRef.current = autocomplete;
+        }}
+        onPlaceChanged={handlePlaceSelect}
+      >
+        <input
+          type="text"
+          placeholder="Search for a location"
+          style={{
+            position: 'absolute',
+            top: '1rem',
+            left: '1rem',
+            zIndex: 1,
+            padding: '0.5rem',
           }}
-          onPlaceChanged={handlePlaceSelect}
-        >
-          <input
-            type="text"
-            placeholder="Search for a location"
-            style={{
-              position: 'absolute',
-              top: '1rem',
-              left: '1rem',
-              zIndex: 1,
-              padding: '0.5rem',
+        />
+      </Autocomplete>
+      <GoogleMap
+        onLoad={(map) => {
+          mapRef.current = map;
+        }}
+        mapContainerStyle={{ height: 'calc(100vh - 4rem)', width: '100%' }}
+        center={mapCenter}
+        zoom={mapZoom}
+        options={{
+          styles: mapStyles,
+        }}
+      >
+        {userPosts.map((post, index) => (
+          <Marker
+            key={index}
+            position={post.marker}
+            onClick={() => {
+              setOpenModal(true);
             }}
           />
-        </Autocomplete>
-        <GoogleMap
-          onLoad={(map) => {
-            mapRef.current = map;
-          }}
-          mapContainerStyle={{ height: 'calc(100vh - 4rem)', width: '100%' }}
-          center={mapCenter}
-          zoom={mapZoom}
-          options={{
-            styles: mapStyles,
-          }}
-        >
-   {markerPosition && (
-  <Marker
-    position={markerPosition}
-    onClick={() => {
-      setOpenModal(true);
-    }}
-  />
-)}
+        ))}
+        {markerPosition && (
+          <Marker
+            position={markerPosition}
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          />
+        )}
 
-
-    
-         <Modal
-     open={openModal}
-     onClose={handleClose}>
-       <Box sx={modalStyle}>
-          <Box sx={contentStyle}>
-
-          {showUserUpdate? (
-        <UserUpdate />
-      ) : (
-       <UserPostDisplay markerPosition={markerPosition}  />
-      )}
-
-<Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
+        <Modal open={openModal} onClose={handleClose}>
+          <Box sx={modalStyle}>
+            <Box sx={contentStyle}>
               {showUserUpdate ? (
-                <Typography variant="body2">
-                  {' '}
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => setShowUserUpdate(false)}
-                  >
-                    See post updates
-                  </Link>
-                </Typography>
+                <UserUpdate />
               ) : (
-                <Typography variant="body2">
-                  {' '}
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={handleUserUpdateClick}
-                  >
-                    Make post
-                    </Link>
-                </Typography>
+                <UserPostDisplay markerPosition={markerPosition} />
               )}
+
+              <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
+                {showUserUpdate ? (
+                  <Typography variant="body2">
+                    <Link
+                      component="button"
+                      variant="body2"
+                      onClick={() => setShowUserUpdate(false)}
+                    >
+                      See post updates
+                    </Link>
+                  </Typography>
+                ) : (
+                  <Typography variant="body2">
+                    <Link
+                      component="button"
+                      variant="body2"
+                      onClick={handleUserUpdateClick}
+                    >
+                      Make post
+                    </Link>
+                  </Typography>
+                )}
+              </Box>
             </Box>
           </Box>
-          </Box>
-       
-            
-         </Modal>
-        </GoogleMap>
-      </LoadScript>
+        </Modal>
+      </GoogleMap>
+    </LoadScript>
+  );
+};
 
-    );
-        };
-  
-  export default MapContainer;
-        
+export default MapContainer;

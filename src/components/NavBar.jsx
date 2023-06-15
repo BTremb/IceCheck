@@ -1,5 +1,5 @@
-import React, { useState , useEffect } from 'react';
-import { useNavigate , useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Modal, Typography, Box, Link } from '@mui/material';
 import Login from './forms/Login';
 import SignUp from './forms/SignUp';
@@ -18,8 +18,8 @@ const modalStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-
 };
+
 const contentStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -29,30 +29,20 @@ const contentStyle = {
 
 const NavBar = () => {
   const navBarStyles = {
-    backgroundColor: '#f2f2f2',
-    padding: '0.8rem',
     display: 'flex',
-    gap: '2rem',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#F5F5F5',
   };
 
-  const navigate = useNavigate();
+  
   const location = useLocation();
-  const [flipFlop, setFlipFlop] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
 
   useEffect(() => {
-    setOpenModal(false); // Close the modal when the URL changes
+    setOpenModal(false);
   }, [location.pathname]);
-  
-  const buttonClick = (page) => {
-    if (page !== window.location.pathname){
-      setFlipFlop(!flipFlop);
-      navigate(page);
-    }
-  };
 
   const handleClose = () => {
     setOpenModal(false);
@@ -63,40 +53,25 @@ const NavBar = () => {
     setShowSignUp(true);
   };
 
-  const buttonStylesMapView = {
-    backgroundColor: flipFlop ? '#D3D3D3' : '#4f9cba' ,
-    color: '#000000',
-  };
-
-  const buttonStylesListView = {
-    backgroundColor: flipFlop ? '#4f9cba' : '#D3D3D3' ,
-    color: '#000000',
-  };
-
   const buttonStylesLogin = {
     backgroundColor: '#D3D3D3',
     color: '#000000',
-    marginRight: '0.8rem',
-  }
+    marginLeft: 'auto',
+    marginRight: '1rem',
+  };
+
+  const logoStyles = {
+    flex: 1,
+    fontSize: '1.7rem',
+    fontWeight: 'bold',
+    color: '#000000',
+    textAlign: 'center',
+  };
+  
 
   return (
     <nav style={navBarStyles}>
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, gap: '1.5rem'}}>
-      <Button
-        style={buttonStylesMapView}
-        variant="contained"
-        onClick={() => buttonClick('/')}
-      >
-        MapView
-      </Button>
-      <Button
-        style={buttonStylesListView}
-        variant="contained"
-        onClick={() => buttonClick('/ListView')}
-      >
-        ListView
-      </Button>
-      </div>
+      <div style={logoStyles}>IceCheck</div>
       <Button
         style={buttonStylesLogin}
         variant="contained"
@@ -105,18 +80,11 @@ const NavBar = () => {
         Login
       </Button>
 
-  <Modal
-  open={openModal}
-  onClose={handleClose}>
-
-  <Box sx={modalStyle}>
-    <Box sx={contentStyle}>
-      {showSignUp? (
-        <SignUp />
-      ) : (
-       <Login />
-      )}
-       <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
+      <Modal open={openModal} onClose={handleClose}>
+        <Box sx={modalStyle}>
+          <Box sx={contentStyle}>
+            {showSignUp ? <SignUp /> : <Login />}
+            <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
               {showSignUp ? (
                 <Typography variant="body2">
                   Already have an account?{' '}
@@ -137,7 +105,7 @@ const NavBar = () => {
                     onClick={handleSignUpClick}
                   >
                     Sign Up
-                    </Link>
+                  </Link>
                 </Typography>
               )}
             </Box>

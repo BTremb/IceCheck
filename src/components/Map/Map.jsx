@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Autocomplete, Marker } from '@react-google-maps/api';
-import { Modal, Box } from '@mui/material';
+import { Button, Modal, Typography, Box, Link } from '@mui/material';
 import UserUpdate from '../forms/UserUpdate';
+import UserPostDisplay from '../forms/UserPostDisplay';
 
 const libraries = ['places'];
 
@@ -106,10 +107,13 @@ const MapContainer = () => {
   };
 
   
+  
     const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
     const [mapZoom, setMapZoom] = useState(8);
     const [markerPosition, setMarkerPosition] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+    const [showUserUpdate, setShowUserUpdate] = useState(false);
+    
   
     const mapRef = useRef(null);
     const autocompleteRef = useRef(null);
@@ -118,9 +122,16 @@ const MapContainer = () => {
       const savedMarkerPosition = localStorage.getItem('markerPosition');
       if (savedMarkerPosition) {
         setMarkerPosition(JSON.parse(savedMarkerPosition));
+        setMarkerPosition(markerPosition);
       }
     }, []);
-  
+
+    const savedMarkerPosition = localStorage.getItem('markerPosition');
+    if (savedMarkerPosition) {
+      const markerPosition = JSON.parse(savedMarkerPosition);
+      console.log(markerPosition);
+    }
+    
     const handlePlaceSelect = () => {
       const autocomplete = autocompleteRef.current;
   
@@ -166,8 +177,12 @@ const MapContainer = () => {
   
     const handleClose = () => {
       setOpenModal(false);
+      setShowUserUpdate(false);
     }
   
+    const handleUserUpdateClick = () => {
+      setShowUserUpdate(true);
+    };
     return (
       <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
         <Autocomplete
@@ -199,14 +214,54 @@ const MapContainer = () => {
             styles: mapStyles,
           }}
         >
-          {markerPosition && <Marker position={markerPosition}  onClick={() => setOpenModal(true)}/>}
+   {markerPosition && (
+  <Marker
+    position={markerPosition}
+    onClick={() => {
+      setOpenModal(true);
+    }}
+  />
+)}
+
+
     
          <Modal
      open={openModal}
      onClose={handleClose}>
        <Box sx={modalStyle}>
           <Box sx={contentStyle}>
-          <UserUpdate />
+
+          {showUserUpdate? (
+        <UserUpdate />
+      ) : (
+       <UserPostDisplay markerPosition={markerPosition}  />
+      )}
+
+<Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
+              {showUserUpdate ? (
+                <Typography variant="body2">
+                  {' '}
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => setShowUserUpdate(false)}
+                  >
+                    See post updates
+                  </Link>
+                </Typography>
+              ) : (
+                <Typography variant="body2">
+                  {' '}
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={handleUserUpdateClick}
+                  >
+                    Make post
+                    </Link>
+                </Typography>
+              )}
+            </Box>
           </Box>
           </Box>
        

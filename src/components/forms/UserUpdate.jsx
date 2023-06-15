@@ -21,23 +21,14 @@ const UserUpdate = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
    
 
-  useEffect(() => {
-    const savedMarkerPosition = localStorage.getItem('markerPosition');
-    if (savedMarkerPosition) {
-      const markerPosition = JSON.parse(savedMarkerPosition);
-      console.log(markerPosition);
-    }
-    
-  }, []);
+
 
   const onSubmit = (data) => {
     const { iceThickness, measurementMethod } = data;
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
-    const marker = localStorage.getItem('markerPosition');
- 
-    
-
+    const marker = JSON.parse(localStorage.getItem('markerPosition')); // Parse the stored marker position
+  
     const update = {
       iceThickness,
       measurementMethod,
@@ -48,7 +39,7 @@ const UserUpdate = () => {
     saveUserUpdate(update);
     console.log(update);
   };
-
+  
   const saveUserUpdate = (update) => {
     const storedUpdates = localStorage.getItem('userUpdates');
     let updates = [];
@@ -57,7 +48,7 @@ const UserUpdate = () => {
     }
     updates.push(update);
     localStorage.setItem('userUpdates', JSON.stringify(updates));
-  };
+  }
 
   return (
     <Card sx={cardStyle}>

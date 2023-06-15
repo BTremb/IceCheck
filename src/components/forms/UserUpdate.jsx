@@ -17,17 +17,14 @@ const cardStyle = {
 };
 
 
-const UserUpdate = () => {
+const UserUpdate = ({marker}) => {
   const { control, handleSubmit, formState: { errors } } = useForm();
    
-
-
 
   const onSubmit = (data) => {
     const { iceThickness, measurementMethod } = data;
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
-    const marker = JSON.parse(localStorage.getItem('markerPosition')); // Parse the stored marker position
   
     const update = {
       iceThickness,

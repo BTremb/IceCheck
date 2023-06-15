@@ -3,6 +3,7 @@ import { GoogleMap, LoadScript, Autocomplete, Marker } from '@react-google-maps/
 import { Button, Modal, Typography, Box, Link } from '@mui/material';
 import UserUpdate from '../forms/UserUpdate';
 import UserPostDisplay from '../forms/UserPostDisplay';
+import MarkerWithModal from './MarkerWithModal';
 
 const libraries = ['places'];
 
@@ -176,7 +177,7 @@ const MapContainer = () => {
   const handleUserUpdateClick = () => {
     setShowUserUpdate(true);
   };
-
+console.log(userPosts);
   return (
     <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
       <Autocomplete
@@ -209,58 +210,20 @@ const MapContainer = () => {
         }}
       >
         {userPosts.map((post, index) => (
-          <Marker
-            key={index}
-            position={post.marker}
-            onClick={() => {
-              setOpenModal(true);
-            }}
-          />
+         
+         <MarkerWithModal 
+         index={index}
+         post={post}
+         />
+
         ))}
-        {markerPosition && (
-          <Marker
+        {/* {markerPosition && (
+          <MarkerWithModal
+            index={999999}
             position={markerPosition}
-            onClick={() => {
-              setOpenModal(true);
-            }}
           />
-        )}
+        )} */}
 
-        <Modal open={openModal} onClose={handleClose}>
-          <Box sx={modalStyle}>
-            <Box sx={contentStyle}>
-              {showUserUpdate ? (
-                <UserUpdate />
-              ) : (
-                <UserPostDisplay markerPosition={markerPosition} />
-              )}
-
-              <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
-                {showUserUpdate ? (
-                  <Typography variant="body2">
-                    <Link
-                      component="button"
-                      variant="body2"
-                      onClick={() => setShowUserUpdate(false)}
-                    >
-                      See post updates
-                    </Link>
-                  </Typography>
-                ) : (
-                  <Typography variant="body2">
-                    <Link
-                      component="button"
-                      variant="body2"
-                      onClick={handleUserUpdateClick}
-                    >
-                      Make post
-                    </Link>
-                  </Typography>
-                )}
-              </Box>
-            </Box>
-          </Box>
-        </Modal>
       </GoogleMap>
     </LoadScript>
   );

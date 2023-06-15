@@ -33,6 +33,7 @@ const NavBar = () => {
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#F5F5F5',
+    padding: '0.7rem',
   };
 
   

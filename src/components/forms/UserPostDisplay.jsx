@@ -15,7 +15,8 @@ const UserPostDisplay = ({ markerPosition }) => {
     };
 
     const filteredUpdates = getUpdatesByMarker(markerPosition);
-    setUpdates(filteredUpdates);
+    // Reverse the order of updates array
+    setUpdates(filteredUpdates.reverse());
   }, [markerPosition]);
 
   return (

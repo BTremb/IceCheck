@@ -38,10 +38,10 @@ console.log(markerPosition);
             >
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="body1" component="p">
-                  Ice Thickness: {update.iceThickness}cm
+                  Ice thickness: {update.iceThickness}cm
                 </Typography>
                 <Typography variant="body1" component="p">
-                  Measurement Method: {update.measurementMethod}
+                  Measurement method: {update.measurementMethod}
                 </Typography>
                 <Typography variant="body1" component="p">
                   Date: {update.date}

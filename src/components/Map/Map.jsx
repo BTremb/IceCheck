@@ -5,6 +5,7 @@ import UserUpdate from '../forms/UserUpdate';
 import UserPostDisplay from '../forms/UserPostDisplay';
 import MarkerWithModal from './MarkerWithModal';
 
+
 const libraries = ['places'];
 
 const MapContainer = () => {
@@ -103,6 +104,8 @@ const MapContainer = () => {
   const [showUserUpdate, setShowUserUpdate] = useState(false);
   const [userPosts, setUserPosts] = useState([]);
 
+
+
   const mapRef = useRef(null);
   const autocompleteRef = useRef(null);
 
@@ -119,6 +122,8 @@ const MapContainer = () => {
       setUserPosts(parsedUserPosts);
     }
   }, []);
+
+  
 
   const handlePlaceSelect = () => {
     const autocomplete = autocompleteRef.current;
@@ -177,6 +182,9 @@ const MapContainer = () => {
   const handleUserUpdateClick = () => {
     setShowUserUpdate(true);
   };
+
+ 
+
 console.log(userPosts);
   return (
     <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
@@ -208,7 +216,8 @@ console.log(userPosts);
         options={{
           styles: mapStyles,
         }}
-      >
+      > 
+     
         {userPosts.map((post, index) => (
          
          <MarkerWithModal 
@@ -223,8 +232,8 @@ console.log(userPosts);
             position={markerPosition}
           />
         )} */}
-
       </GoogleMap>
+ 
     </LoadScript>
   );
 };

@@ -56,10 +56,10 @@ const UserUpdate = ({marker}) => {
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box mb={1.5}>
-        <TextInputField name="iceThickness" label="Ice Thickness (Centimeters)" control={control} errors={errors} required />
+          <TextInputField name="iceThickness" label={<Typography variant="body2">Ice thickness (Centimeters)</Typography>} control={control} errors={errors} required />
         </Box>
         <Box mb={1.5}>
-          <TextInputField name="measurementMethod" label="Method of Measurement" control={control} errors={errors} required />
+          <TextInputField name="measurementMethod" label={<Typography variant="body2">Measurement method</Typography>} control={control} errors={errors} required />
         </Box>
         <Box mb={1.5}>
           <Typography variant="body1" component="p">
@@ -68,15 +68,15 @@ const UserUpdate = ({marker}) => {
           <Typography variant="body1" component="p">
             Time: {new Date().toLocaleTimeString()}
           </Typography>
-         
-      
         </Box>
         <Button variant="contained" color="primary" type="submit">
           Submit
         </Button>
       </form>
     </Card>
-  )
+  );
+  
+  
 };
 
 export default UserUpdate;

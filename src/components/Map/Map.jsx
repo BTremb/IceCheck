@@ -122,7 +122,9 @@ const MapContainer = () => {
       setUserPosts(parsedUserPosts);
     }
   }, []);
-
+const updateUserPost = (post) => {
+  setUserPosts(userPosts.push(post));
+}
   
 
   const handlePlaceSelect = () => {
@@ -186,6 +188,7 @@ const MapContainer = () => {
  
 
 console.log(userPosts);
+console.log(markerPosition);
   return (
     <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
       <Autocomplete
@@ -217,21 +220,23 @@ console.log(userPosts);
           styles: mapStyles,
         }}
       > 
-     
+         {markerPosition!==null && ( 
+          <MarkerWithModal
+            index={999999}
+            position={markerPosition} 
+            updateUserPost={updateUserPost}
+          />
+        )}
         {userPosts.map((post, index) => (
          
          <MarkerWithModal 
          index={index}
          post={post}
+         updateUserPost={updateUserPost}
          />
 
         ))}
-        {/* {markerPosition && (
-          <MarkerWithModal
-            index={999999}
-            position={markerPosition}
-          />
-        )} */}
+    
       </GoogleMap>
  
     </LoadScript>

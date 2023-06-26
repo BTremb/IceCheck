@@ -3,7 +3,7 @@ import { Box, Typography, Paper, List, ListItem } from '@mui/material';
 
 const UserPostDisplay = ({ markerPosition }) => {
   const [updates, setUpdates] = useState([]);
-console.log(markerPosition);
+
   useEffect(() => {
     const getUpdatesByMarker = (marker) => {
       const storedUpdates = localStorage.getItem('userUpdates');
@@ -15,12 +15,11 @@ console.log(markerPosition);
     };
 
     const filteredUpdates = getUpdatesByMarker(markerPosition);
-    // Reverse the order of updates array
     setUpdates(filteredUpdates.reverse());
   }, [markerPosition]);
 
   return (
-    <Box sx={{ height: '400px', overflow: 'auto' }}>
+    <Box sx={{ height: '400px', overflow: 'auto', paddingRight: '16px', paddingLeft: '16px' }}>
       <Paper elevation={3} sx={{ borderRadius: '8px', overflow: 'hidden' }}>
         <List sx={{ padding: 0 }}>
           {updates.map((update, index) => (
@@ -59,4 +58,5 @@ console.log(markerPosition);
 };
 
 export default UserPostDisplay;
+
 

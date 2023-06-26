@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Card, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import TextInputField from './TextInputField';
-
 
 const cardStyle = {
   padding: '1rem',
@@ -16,16 +15,23 @@ const cardStyle = {
   justifyContent: 'center',
 };
 
+const formStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+};
 
-const UserUpdate = ({marker}) => {
-  const { control, handleSubmit, formState: { errors } } = useForm();
-   
+const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
+  const { control, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    revertView();
+    reset(); // Reset the form fields to their initial state
+
     const { iceThickness, measurementMethod } = data;
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
-  
+
     const update = {
       iceThickness,
       measurementMethod,
@@ -33,11 +39,12 @@ const UserUpdate = ({marker}) => {
       time,
       marker,
     };
-    saveUserUpdate(update);
-    console.log(update);
+
+    await saveUserUpdate(update);
+    userPostUpdate(update);
   };
-  
-  const saveUserUpdate = (update) => {
+
+  const saveUserUpdate = async (update) => {
     const storedUpdates = localStorage.getItem('userUpdates');
     let updates = [];
     if (storedUpdates) {
@@ -45,7 +52,11 @@ const UserUpdate = ({marker}) => {
     }
     updates.push(update);
     localStorage.setItem('userUpdates', JSON.stringify(updates));
-  }
+  };
+
+  const handleRevertAndSubmit = () => {
+    handleSubmit(onSubmit)();
+  };
 
   return (
     <Card sx={cardStyle}>
@@ -54,9 +65,9 @@ const UserUpdate = ({marker}) => {
           Update
         </Typography>
       </Box>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form style={formStyle}>
         <Box mb={1.5}>
-          <TextInputField name="iceThickness" label={<Typography variant="body2">Ice thickness (Centimeters)</Typography>} control={control} errors={errors} required />
+          <TextInputField name="iceThickness" label={<Typography variant="body2">Ice thickness (cm)</Typography>} control={control} errors={errors} required />
         </Box>
         <Box mb={1.5}>
           <TextInputField name="measurementMethod" label={<Typography variant="body2">Measurement method</Typography>} control={control} errors={errors} required />
@@ -69,17 +80,26 @@ const UserUpdate = ({marker}) => {
             Time: {new Date().toLocaleTimeString()}
           </Typography>
         </Box>
-        <Button variant="contained" color="primary" type="submit">
+        <Button variant="contained" color="primary" size="small" onClick={handleRevertAndSubmit}>
           Submit
         </Button>
       </form>
     </Card>
   );
-  
-  
 };
 
 export default UserUpdate;
+
+
+
+
+
+
+
+
+
+
+
 
 
 

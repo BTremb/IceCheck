@@ -29,7 +29,7 @@ const LoginForm = () => {
       const parsedData = JSON.parse(storedData);
       if (parsedData.email === email && parsedData.password === password) {
         setUserData(parsedData);
-        navigate('/profile', { state: { user: parsedData } }); // Pass the user data as state when navigating
+        navigate('/profile', { state: { user: parsedData } });
       } else {
         setLoginError(true);
       }

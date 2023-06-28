@@ -14,6 +14,8 @@ const cardStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  borderRadius: '8px',
+  boxShadow: 'none',
 };
 
 const SignUp = () => {
@@ -36,13 +38,21 @@ const SignUp = () => {
     const storedData = localStorage.getItem('userData');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      return parsedData.email === email;
+      const userData = parsedData ? parsedData : {};
+      const profiles = Object.values(userData);
+      return profiles.some(profile => profile.email === email);
     }
     return false;
   };
-
+  
   const saveUserData = (data) => {
-    localStorage.setItem('userData', JSON.stringify(data));
+    const storedData = localStorage.getItem('userData');
+    const userData = storedData ? JSON.parse(storedData) : {};
+  
+    const { email } = data;
+    userData[email] = data;
+  
+    localStorage.setItem('userData', JSON.stringify(userData));
   };
 
   return (
@@ -67,14 +77,19 @@ const SignUp = () => {
         <Box mb={1.5}>
           <TextInputField name="userName" label="Username" control={control} errors={errors} required />
         </Box>
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button variant="contained" color="primary" type="submit" size="small">
+            Submit
+          </Button>
+        </Box>
       </form>
     </Card>
   );
 };
 
 export default SignUp;
+
+
+
 
 

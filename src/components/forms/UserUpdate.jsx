@@ -13,6 +13,8 @@ const cardStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  boxShadow: 'none',
+  borderRadius: '8px',
 };
 
 const formStyle = {
@@ -26,7 +28,7 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
 
   const onSubmit = async (data) => {
     revertView();
-    reset(); // Reset the form fields to their initial state
+    reset();
 
     const { iceThickness, measurementMethod } = data;
     const date = new Date().toLocaleDateString();
@@ -67,18 +69,29 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
       </Box>
       <form style={formStyle}>
         <Box mb={1.5}>
-          <TextInputField name="iceThickness" label={<Typography variant="body2">Ice thickness (cm)</Typography>} control={control} errors={errors} required />
+          <TextInputField
+            name="iceThickness"
+            label={<Typography variant="body2">Ice thickness (cm)*</Typography>}
+            control={control}
+            errors={errors}
+            required
+          />
         </Box>
         <Box mb={1.5}>
-          <TextInputField name="measurementMethod" label={<Typography variant="body2">Measurement method</Typography>} control={control} errors={errors} required />
+          <TextInputField
+            name="measurementMethod"
+            label={<Typography variant="body2">Measurement method</Typography>}
+            control={control}
+            errors={errors}
+          />
         </Box>
         <Box mb={1.5}>
-          <Typography variant="body1" component="p">
-            Date: {new Date().toLocaleDateString()}
-          </Typography>
-          <Typography variant="body1" component="p">
-            Time: {new Date().toLocaleTimeString()}
-          </Typography>
+        <Typography variant="body1" component="p">
+  <span style={{ fontWeight: 'bold' }}>Date:</span> {new Date().toLocaleDateString()}
+</Typography>
+<Typography variant="body1" component="p">
+  <span style={{ fontWeight: 'bold' }}>Time:</span> {new Date().toLocaleTimeString()}
+</Typography>
         </Box>
         <Button variant="contained" color="primary" size="small" onClick={handleRevertAndSubmit}>
           Submit
@@ -89,6 +102,7 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
 };
 
 export default UserUpdate;
+
 
 
 

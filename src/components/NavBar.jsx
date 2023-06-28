@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Modal, Typography, Box, Link } from '@mui/material';
 import Login from './forms/Login';
 import SignUp from './forms/SignUp';
+import OnboardingModal from './OnboardingModal';
 
 const modalStyle = {
   position: 'absolute',
@@ -18,6 +18,7 @@ const modalStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  borderRadius: '14px'
 };
 
 const contentStyle = {
@@ -36,22 +37,38 @@ const NavBar = () => {
     padding: '0.7rem',
   };
 
-  
-  const location = useLocation();
   const [openModal, setOpenModal] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setOpenModal(false);
-  }, [location.pathname]);
+    const loggedInStatus = localStorage.getItem('isLoggedIn');
+    setIsLoggedIn(loggedInStatus === 'true');
+  }, []);
 
   const handleClose = () => {
     setOpenModal(false);
     setShowSignUp(false);
+    setShowInfo(false);
   };
 
   const handleSignUpClick = () => {
     setShowSignUp(true);
+  };
+
+  const handleInfoClick = () => {
+    setShowInfo(true);
+  };
+
+  const handleLoginLogoutClick = () => {
+    if (isLoggedIn) {
+      setIsLoggedIn(false);
+      localStorage.removeItem('isLoggedIn');
+    } else {
+      setOpenModal(true);
+      setShowSignUp(false);
+    }
   };
 
   const buttonStylesLogin = {
@@ -68,43 +85,57 @@ const NavBar = () => {
     color: '#000000',
     textAlign: 'center',
   };
-  
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    localStorage.setItem('isLoggedIn', 'true');
+    handleClose();
+  };
 
   return (
     <nav style={navBarStyles}>
       <div style={logoStyles}>IceCheck</div>
-      <Button
-        style={buttonStylesLogin}
-        variant="contained"
-        onClick={() => setOpenModal(true)}
-      >
-        Login
+      <Button style={buttonStylesLogin} variant="contained" onClick={handleInfoClick}>
+        Info
+      </Button>
+      <Button style={buttonStylesLogin} variant="contained" onClick={handleLoginLogoutClick}>
+        {isLoggedIn ? 'Logout' : 'Login'}
       </Button>
 
-      <Modal open={openModal} onClose={handleClose}>
+      <Modal open={openModal || showInfo} onClose={handleClose}>
         <Box sx={modalStyle}>
           <Box sx={contentStyle}>
-            {showSignUp ? <SignUp /> : <Login />}
+            {isLoggedIn ? (
+              <>
+                <Typography variant="body2">You are already logged in.</Typography>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setIsLoggedIn(false);
+                    localStorage.removeItem('isLoggedIn');
+                  }}
+                  style={{ marginTop: '1rem' }}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : showSignUp ? (
+              <SignUp />
+            ) : (
+              <Login onLoginSuccess={handleLoginSuccess} />
+            )}
             <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
               {showSignUp ? (
                 <Typography variant="body2">
                   Already have an account?{' '}
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => setShowSignUp(false)}
-                  >
+                  <Link component="button" variant="body2" onClick={() => setShowSignUp(false)}>
                     Login
                   </Link>
                 </Typography>
               ) : (
                 <Typography variant="body2">
                   Don't have an account?{' '}
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={handleSignUpClick}
-                  >
+                  <Link component="button" variant="body2" onClick={handleSignUpClick}>
                     Sign Up
                   </Link>
                 </Typography>
@@ -113,8 +144,22 @@ const NavBar = () => {
           </Box>
         </Box>
       </Modal>
+
+      {showInfo && <OnboardingModal onClose={handleClose} />}
     </nav>
   );
 };
 
 export default NavBar;
+
+
+
+
+
+
+
+
+
+
+
+

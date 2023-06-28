@@ -54,7 +54,7 @@ const MarkerWithModal = ({ index, post, position, updateUserPost }) => {
         <Paper
           sx={{
             ...modalStyle,
-            borderRadius: '8px',
+            borderRadius: '14px',
             position: 'absolute',
             bgcolor: 'background.paper',
             border: '2px solid #000',

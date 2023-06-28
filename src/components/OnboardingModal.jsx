@@ -19,6 +19,7 @@ const OnboardingModal = ({ onClose }) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          borderRadius: '14px',
         }}
       >
         <Typography variant="h5" component="div" marginBottom={'1rem'}>

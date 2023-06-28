@@ -5,7 +5,7 @@ import NavBar from './components/NavBar';
 import MapView from './components/Map/MapView';
 import ProfilePage from './components/forms/UserProfile';
 
-const App = () => {
+const IceCheck = () => {
   return (
  <BrowserRouter>
   <NavBar />
@@ -17,4 +17,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default IceCheck;

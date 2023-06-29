@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Box, Button, Card, Typography } from '@mui/material';
 import TextInputField from './TextInputField';
@@ -19,19 +19,37 @@ const cardStyle = {
 
 const LoginForm = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loginError, setLoginError] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(isLoggedIn);
+  
+    if (isLoggedIn) {
+      const storedData = localStorage.getItem('userData');
+      if (storedData) {
+        const userData = JSON.parse(storedData);
+        setUserData(userData);
+      }
+    }
+  }, []);
+  
   const onSubmit = (data) => {
     const { email, password } = data;
     const storedData = localStorage.getItem('userData');
+  
     if (storedData) {
-      const userData = JSON.parse(storedData);
-      const user = userData[email];
-      if (user && user.password === password) {
-        setUserData(user);
+      const parsedData = JSON.parse(storedData);
+      const userData = parsedData ? parsedData : {};
+      const profile = userData[email];
+  
+      if (profile && password === profile.password) {
         setIsLoggedIn(true);
+        setUserData(profile);
+        setLoginError(false);
+        localStorage.setItem('isLoggedIn', 'true');
       } else {
         setLoginError(true);
       }
@@ -39,6 +57,28 @@ const LoginForm = () => {
       setLoginError(true);
     }
   };
+  
+  
+  
+  const checkProfileExists = (email) => {
+    const storedData = localStorage.getItem('userData');
+    
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      const userData = parsedData ? parsedData : {};
+      const profiles = Object.values(userData);
+      return profiles.some(profile => profile.email === email);
+    }
+    
+    return false;
+  };
+  
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem('isLoggedIn', 'false');
+  };
+  
+  
   
 
   return (
@@ -52,7 +92,7 @@ const LoginForm = () => {
               <Typography variant="body2">Username: {userData.userName}</Typography>
             </Box>
           )}
-          <Button variant="contained" onClick={() => setIsLoggedIn(false)}>
+          <Button variant="contained" onClick={handleLogout}>
             Logout
           </Button>
         </div>
@@ -86,6 +126,7 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
 
 
 

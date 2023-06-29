@@ -22,6 +22,7 @@ const SignUp = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [isProfileExist, setIsProfileExist] = useState(false);
+  const [isAccountCreated, setIsAccountCreated] = useState(false);
 
   const onSubmit = (data) => {
     const { email } = data;
@@ -30,7 +31,7 @@ const SignUp = () => {
       setIsProfileExist(true);
     } else {
       saveUserData(data);
-      navigate('/Profile');
+      setIsAccountCreated(true);
     }
   };
 
@@ -83,11 +84,19 @@ const SignUp = () => {
           </Button>
         </Box>
       </form>
+      {isAccountCreated && (
+        <Typography variant="body2" color="textSecondary" align="center">
+          Account created!
+        </Typography>
+      )}
     </Card>
   );
 };
 
 export default SignUp;
+
+
+
 
 
 

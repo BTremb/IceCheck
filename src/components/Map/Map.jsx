@@ -122,10 +122,11 @@ const MapContainer = () => {
       setUserPosts(parsedUserPosts);
     }
   }, []);
-const updateUserPost = (post) => {
-  setUserPosts(userPosts.push(post));
-}
-  
+
+  const updateUserPost = (post) => {
+    setUserPosts(userPosts.push(post));
+  }
+    
 
   const handlePlaceSelect = () => {
     const autocomplete = autocompleteRef.current;

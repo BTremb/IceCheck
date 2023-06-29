@@ -95,57 +95,24 @@ const NavBar = () => {
   return (
     <nav style={navBarStyles}>
       <div style={logoStyles}>IceCheck</div>
-      <Button style={buttonStylesLogin} variant="contained" onClick={handleInfoClick}>
-        Info
+        <Button style={buttonStylesLogin} variant="contained" onClick={setOpenOnboarding(true)}>
+          Info
+        </Button>
+      { isLoggedIn ? (
+        <Button style={buttonStylesLogin} variant="contained" onClick={setOpenLogin(true)}>
+          Login
+        </Button>
+      ) : (
+        <Button style={buttonStylesLogin} variant="contained" onClick={setOpenProfile(true)}>
+        Profile
       </Button>
-      <Button style={buttonStylesLogin} variant="contained" onClick={handleLoginLogoutClick}>
-        {isLoggedIn ? 'Logout' : 'Login'}
-      </Button>
+      )
+        
+      }
 
-      <Modal open={openModal || showInfo} onClose={handleClose}>
-        <Box sx={modalStyle}>
-          <Box sx={contentStyle}>
-            {isLoggedIn ? (
-              <>
-                <Typography variant="body2">You are already logged in.</Typography>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    setIsLoggedIn(false);
-                    localStorage.removeItem('isLoggedIn');
-                  }}
-                  style={{ marginTop: '1rem' }}
-                >
-                  Logout
-                </Button>
-              </>
-            ) : showSignUp ? (
-              <SignUp />
-            ) : (
-              <Login onLoginSuccess={handleLoginSuccess} />
-            )}
-            <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
-              {showSignUp ? (
-                <Typography variant="body2">
-                  Already have an account?{' '}
-                  <Link component="button" variant="body2" onClick={() => setShowSignUp(false)}>
-                    Login
-                  </Link>
-                </Typography>
-              ) : (
-                <Typography variant="body2">
-                  Don't have an account?{' '}
-                  <Link component="button" variant="body2" onClick={handleSignUpClick}>
-                    Sign Up
-                  </Link>
-                </Typography>
-              )}
-            </Box>
-          </Box>
-        </Box>
-      </Modal>
-
-      {showInfo && <OnboardingModal onClose={handleClose} />}
+      <LoginModal open={openLogin}/>
+      <ProfileCard open={openProfile}/>
+      <OnboardingModal open={openOnboarding}/>
     </nav>
   );
 };

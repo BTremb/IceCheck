@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, Typography, Box, Button } from '@mui/material';
 
-const OnboardingModal = ({ onClose }) => {
+const OnboardingModal = ({ open, onClose }) => {
   return (
-    <Modal open={true} onClose={onClose}>
+    <Modal open={open} onClose={onClose}>
       <Box
         sx={{
           position: 'absolute',

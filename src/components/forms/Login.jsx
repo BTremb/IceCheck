@@ -42,46 +42,33 @@ const LoginForm = () => {
   
 
   return (
-    <Card sx={cardStyle}>
-      {isLoggedIn ? (
-        <div>
-          <Typography variant="body1">You are logged in.</Typography>
-          {userData && (
-            <Box mt={2}>
-              <Typography variant="body2">Email: {userData.email}</Typography>
-              <Typography variant="body2">Username: {userData.userName}</Typography>
-            </Box>
-          )}
-          <Button variant="contained" onClick={() => setIsLoggedIn(false)}>
-            Logout
-          </Button>
-        </div>
-      ) : (
-        <div>
-          <Typography variant="h6" component="h2" mb={2}>
-            Login
-          </Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Box mb={1.5}>
-              <TextInputField name="email" label="Email" control={control} errors={errors} required />
-            </Box>
-            <Box mb={1.5}>
-              <TextInputField name="password" label="Password" control={control} errors={errors} required />
-              {loginError && (
-                <Typography variant="caption" color="error">
-                  Invalid email or password.
-                </Typography>
-              )}
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button variant="contained" color="primary" type="submit" size="small">
-                Login
-              </Button>
-            </Box>
-          </form>
-        </div>
-      )}
-    </Card>
+    <Modal>
+      <Card sx={cardStyle}>
+          <div>
+            <Typography variant="h6" component="h2" mb={2}>
+              Login
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box mb={1.5}>
+                <TextInputField name="email" label="Email" control={control} errors={errors} required />
+              </Box>
+              <Box mb={1.5}>
+                <TextInputField name="password" label="Password" control={control} errors={errors} required />
+                {loginError && (
+                  <Typography variant="caption" color="error">
+                    Invalid email or password.
+                  </Typography>
+                )}
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button variant="contained" color="primary" type="submit" size="small">
+                  Login
+                </Button>
+              </Box>
+            </form>
+          </div>
+      </Card>
+    </Modal>
   );
 };
 

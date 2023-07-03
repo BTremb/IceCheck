@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Box, Button, Card, Typography } from '@mui/material';
 import TextInputField from './TextInputField';
+import { UserContext } from '../../contexts/UserContext';
 
 const cardStyle = {
   padding: '1rem',
@@ -23,7 +24,14 @@ const LoginForm = () => {
   const [loginError, setLoginError] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // this pulls the function out of the context that is stored in value
+  const {login} = useContext(UserContext)
+
   const onSubmit = (data) => {
+
+    // consolidate login logic into this login() function in the context
+    login()
+
     const { email, password } = data;
     const storedData = localStorage.getItem('userData');
     if (storedData) {

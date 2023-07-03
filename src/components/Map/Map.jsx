@@ -121,7 +121,7 @@ const MapContainer = () => {
       const parsedUserPosts = JSON.parse(storedUserPosts);
       setUserPosts(parsedUserPosts);
     }
-  }, []);
+  }, [userPosts]);
 const updateUserPost = (post) => {
   setUserPosts(userPosts.push(post));
 }

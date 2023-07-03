@@ -14,7 +14,6 @@ const cardStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   boxShadow: 'none',
-  borderRadius: '8px',
 };
 
 const formStyle = {
@@ -33,6 +32,7 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
     const { iceThickness, measurementMethod } = data;
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
+    
 
     const update = {
       iceThickness,

@@ -99,7 +99,7 @@ const NavBar = () => {
         Info
       </Button>
       <Button style={buttonStylesLogin} variant="contained" onClick={handleLoginLogoutClick}>
-        {isLoggedIn ? 'Logout' : 'Login'}
+        {isLoggedIn ? 'Profile' : 'Login'}
       </Button>
 
       <Modal open={openModal || showInfo} onClose={handleClose}>

@@ -4,6 +4,7 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = (email, password) => {
     const storedData = localStorage.getItem('userData');
@@ -15,28 +16,25 @@ export const UserProvider = ({ children }) => {
 
       if (profile && password === profile.password) {
         setUser(profile);
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('userData', JSON.stringify(profile));
+        setIsLoggedIn(true);
       } else {
         setUser(null);
-        localStorage.setItem('isLoggedIn', 'false');
-        // localStorage.removeItem('userData');
+        setIsLoggedIn(false);
       }
     } else {
       setUser(null);
-      localStorage.setItem('isLoggedIn', 'false');
-    //   localStorage.removeItem('userData');
+      setIsLoggedIn(false);
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.setItem('isLoggedIn', 'false');
+    setIsLoggedIn(false);
   };
-  
 
   const value = {
     user,
+    isLoggedIn,
     login,
     logout,
   };
@@ -47,3 +45,4 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+

@@ -100,8 +100,6 @@ const MapContainer = () => {
   const [mapCenter, setMapCenter] = useState({ lat: 49.2827, lng: -56.1126 });
   const [mapZoom, setMapZoom] = useState(8);
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [showUserUpdate, setShowUserUpdate] = useState(false);
   const [userPosts, setUserPosts] = useState([]);
 
 
@@ -175,20 +173,7 @@ const updateUserPost = (post) => {
       );
     }
   };
-  
-  const handleClose = () => {
-    setOpenModal(false);
-    setShowUserUpdate(false);
-  };
 
-  const handleUserUpdateClick = () => {
-    setShowUserUpdate(true);
-  };
-
- 
-
-console.log(userPosts);
-console.log(markerPosition);
   return (
     <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
       <Autocomplete

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Box, Button, Card, Typography } from '@mui/material';
 import TextInputField from './TextInputField';
 import { UserContext } from '../../contexts/UserContext';
+
 const cardStyle = {
   padding: '1rem',
   margin: '1rem',
@@ -18,81 +19,27 @@ const cardStyle = {
 };
 
 const LoginForm = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [loginError, setLoginError] = useState(false);
+  const { handleSubmit, register, formState: { errors }, control } = useForm();
+  const { login, user, logout } = useContext(UserContext);
 
-  const {login} = useContext(UserContext)
-  
-
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(isLoggedIn);
-  
-    if (isLoggedIn) {
-      const storedData = localStorage.getItem('userData');
-      if (storedData) {
-        const userData = JSON.parse(storedData);
-        setUserData(userData);
-      }
-    }
-  }, []);
-  
   const onSubmit = (data) => {
-    const { email, password } = data;
-    const storedData = localStorage.getItem('userData');
-  
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      const userData = parsedData ? parsedData : {};
-      const profile = userData[email];
-  
-      if (profile && password === profile.password) {
-        setIsLoggedIn(true);
-        setUserData(profile);
-        setLoginError(false);
-        localStorage.setItem('isLoggedIn', 'true');
-      } else {
-        setLoginError(true);
-      }
-    } else {
-      setLoginError(true);
-    }
+  const { email, password } = data;
+   login(email, password);  
   };
-  
-  
-  
-  const checkProfileExists = (email) => {
-    const storedData = localStorage.getItem('userData');
-    
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      const userData = parsedData ? parsedData : {};
-      const profiles = Object.values(userData);
-      return profiles.some(profile => profile.email === email);
-    }
-    
-    return false;
-  };
-  
+
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', 'false');
+    logout();
   };
-  
-  
-  
 
   return (
     <Card sx={cardStyle}>
-      {isLoggedIn ? (
+      {user ? (
         <div>
           <Typography variant="body1">You are logged in.</Typography>
-          {userData && (
+          {user && (
             <Box mt={2}>
-              <Typography variant="body2">Email: {userData.email}</Typography>
-              <Typography variant="body2">Username: {userData.userName}</Typography>
+              <Typography variant="body2">Email: {user.email}</Typography>
+              <Typography variant="body2">Username: {user.userName}</Typography>
             </Box>
           )}
           <Button variant="contained" onClick={handleLogout}>
@@ -106,15 +53,10 @@ const LoginForm = () => {
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box mb={1.5}>
-              <TextInputField name="email" label="Email" control={control} errors={errors} required />
+              <TextInputField name="email" label="Email" register={register} control={control} errors={errors} required />
             </Box>
             <Box mb={1.5}>
-              <TextInputField name="password" label="Password" control={control} errors={errors} required />
-              {loginError && (
-                <Typography variant="caption" color="error">
-                  Invalid email or password.
-                </Typography>
-              )}
+              <TextInputField name="password" label="Password" register={register} control={control} errors={errors} required />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button variant="contained" color="primary" type="submit" size="small">
@@ -129,12 +71,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-
-
-
-
-
-
-
-

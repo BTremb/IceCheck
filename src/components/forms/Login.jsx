@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext , useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Box, Button, Card, Typography } from '@mui/material';
+import { Box, Button, Card, Typography, Link } from '@mui/material';
 import TextInputField from './TextInputField';
 import { UserContext } from '../../contexts/UserContext';
+import LoggedInPage from './LoggedInPage';
 
 const cardStyle = {
   padding: '1rem',
@@ -21,31 +22,26 @@ const cardStyle = {
 const LoginForm = () => {
   const { handleSubmit, register, formState: { errors }, control } = useForm();
   const { login, user, logout } = useContext(UserContext);
+  const [showSignUp, setShowSignUp] = useState(false);
 
   const onSubmit = (data) => {
-  const { email, password } = data;
-   login(email, password);  
+    const { email, password } = data;
+    login(email, password);
   };
 
   const handleLogout = () => {
     logout();
   };
 
+  
+  const handleSignUpClick = () => {
+    setShowSignUp(true);
+  };
+
   return (
     <Card sx={cardStyle}>
       {user ? (
-        <div>
-          <Typography variant="body1">You are logged in.</Typography>
-          {user && (
-            <Box mt={2}>
-              <Typography variant="body2">Email: {user.email}</Typography>
-              <Typography variant="body2">Username: {user.userName}</Typography>
-            </Box>
-          )}
-          <Button variant="contained" onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
+        <LoggedInPage user={user} handleLogout={handleLogout} />
       ) : (
         <div>
           <Typography variant="h6" component="h2" mb={2}>
@@ -64,6 +60,8 @@ const LoginForm = () => {
               </Button>
             </Box>
           </form>
+    
+    
         </div>
       )}
     </Card>
@@ -71,3 +69,6 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+
+

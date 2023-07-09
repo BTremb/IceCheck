@@ -119,7 +119,7 @@ const MapContainer = () => {
       const parsedUserPosts = JSON.parse(storedUserPosts);
       setUserPosts(parsedUserPosts);
     }
-  }, [userPosts]);
+  }, []);
 const updateUserPost = (post) => {
   setUserPosts(userPosts.push(post));
 }
@@ -209,7 +209,7 @@ const updateUserPost = (post) => {
           <MarkerWithModal
             index={999999}
             position={markerPosition} 
-            updateUserPost={updateUserPost}
+            userPostUpdate={updateUserPost}
           />
         )}
         {userPosts.map((post, index) => (
@@ -217,7 +217,7 @@ const updateUserPost = (post) => {
          <MarkerWithModal 
          index={index}
          post={post}
-         updateUserPost={updateUserPost}
+         userPostUpdate={updateUserPost}
          />
 
         ))}

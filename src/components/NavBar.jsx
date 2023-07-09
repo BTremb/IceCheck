@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Modal, Typography, Box, Link } from '@mui/material';
 import Login from './forms/Login';
 import SignUp from './forms/SignUp';
 import OnboardingModal from './OnboardingModal';
+import { UserContext } from '../contexts/UserContext';
 
 const modalStyle = {
   position: 'absolute',
@@ -41,11 +42,14 @@ const NavBar = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    const loggedInStatus = localStorage.getItem('isLoggedIn');
-    setIsLoggedIn(loggedInStatus === 'true');
-  }, []);
+    if (user){ 
+      setShowSignUp(false)
+       setIsLoggedIn(true)}
+    else {setIsLoggedIn(false)}
+  }, [user]);
 
   const handleClose = () => {
     setOpenModal(false);
@@ -63,12 +67,12 @@ const NavBar = () => {
 
   const handleLoginLogoutClick = () => {
     if (isLoggedIn) {
-      setIsLoggedIn(false);
-      localStorage.removeItem('isLoggedIn');
+      setShowSignUp(false)
     } else {
-      setOpenModal(true);
+      
       setShowSignUp(false);
     }
+    setOpenModal(true);
   };
 
   const buttonStylesLogin = {
@@ -105,25 +109,12 @@ const NavBar = () => {
       <Modal open={openModal || showInfo} onClose={handleClose}>
         <Box sx={modalStyle}>
           <Box sx={contentStyle}>
-            {isLoggedIn ? (
-              <>
-                <Typography variant="body2">You are already logged in.</Typography>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    setIsLoggedIn(false);
-                    localStorage.removeItem('isLoggedIn');
-                  }}
-                  style={{ marginTop: '1rem' }}
-                >
-                  Logout
-                </Button>
-              </>
-            ) : showSignUp ? (
+            { showSignUp ? (
               <SignUp />
             ) : (
               <Login onLoginSuccess={handleLoginSuccess} />
             )}
+            {!user && (
             <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
               {showSignUp ? (
                 <Typography variant="body2">
@@ -141,6 +132,7 @@ const NavBar = () => {
                 </Typography>
               )}
             </Box>
+             )}
           </Box>
         </Box>
       </Modal>

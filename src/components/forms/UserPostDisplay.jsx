@@ -3,7 +3,7 @@ import { Box, Typography, Paper, List, ListItem } from '@mui/material';
 
 const UserPostDisplay = ({ markerPosition }) => {
   const [updates, setUpdates] = useState([]);
-
+console.log(markerPosition);
   useEffect(() => {
     const getUpdatesByMarker = (marker) => {
       const storedUpdates = localStorage.getItem('userUpdates');

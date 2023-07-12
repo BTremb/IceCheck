@@ -3,7 +3,7 @@ import { Box, Typography, Paper, List, ListItem } from '@mui/material';
 
 const UserPostDisplay = ({ markerPosition }) => {
   const [updates, setUpdates] = useState([]);
-console.log(markerPosition);
+
   useEffect(() => {
     const getUpdatesByMarker = (marker) => {
       const storedUpdates = localStorage.getItem('userUpdates');
@@ -20,33 +20,36 @@ console.log(markerPosition);
 
   return (
     <Box sx={{ height: '400px', overflow: 'auto', paddingRight: '16px', paddingLeft: '16px' }}>
-      <Paper elevation={3} sx={{ borderRadius: '8px', overflow: 'hidden' }}>
+      <Paper elevation={3}>
         <List sx={{ padding: 0 }}>
           {updates.map((update, index) => (
-            <ListItem
+            <ListItem 
               key={index}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                borderBottom: '1px solid #e0e0e0',
-                padding: '1rem',
-                '&:last-child': {
-                  borderBottom: 'none',
-                },
+                border: '0.1rem solid #e0e0e0',
+                padding: '2rem',
               }}
             >
               <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="body1" component="p">
-                  Ice thickness: {update.iceThickness}cm
+                <Box mb={1.5} style={{ textAlign: 'center' }}>
+                  <span style={{ fontWeight: 'bold' }}>Ice thickness:</span>
+                  <Typography variant="body1">{update.iceThickness}cm</Typography>
+                </Box>
+
+                <Typography variant="body2" component="p">
+                  <span style={{ fontWeight: 'bold' }}>User:</span> {update.username}
                 </Typography>
-                <Typography variant="body1" component="p">
-                  Measurement method: {update.measurementMethod}
+                <Typography variant="body2" component="p">
+                  <span style={{ fontWeight: 'bold' }}>Date:</span> {update.date}
                 </Typography>
-                <Typography variant="body1" component="p">
-                  Date: {update.date}
+                <Typography variant="body2" component="p">
+                  <span style={{ fontWeight: 'bold' }}>Time:</span> {update.time}
                 </Typography>
-                <Typography variant="body1" component="p">
-                  Time: {update.time}
+                <Typography variant="body2" component="p">
+                  <span style={{ fontWeight: 'bold' }}>Additional info:</span>{' '}
+                  {update.additionalInfo ? update.additionalInfo : 'None'}
                 </Typography>
               </Box>
             </ListItem>
@@ -58,5 +61,6 @@ console.log(markerPosition);
 };
 
 export default UserPostDisplay;
+
 
 

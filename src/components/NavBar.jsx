@@ -76,8 +76,6 @@ const NavBar = () => {
   };
 
   const buttonStylesLogin = {
-    backgroundColor: '#D3D3D3',
-    color: '#000000',
     marginLeft: 'auto',
     marginRight: '1rem',
   };
@@ -99,14 +97,14 @@ const NavBar = () => {
   return (
     <nav style={navBarStyles}>
       <div style={logoStyles}>IceCheck</div>
-      <Button style={buttonStylesLogin} variant="contained" onClick={handleInfoClick}>
+      <Button style={buttonStylesLogin} color="primary" size="small" variant="contained" onClick={handleInfoClick}>
         Info
       </Button>
-      <Button style={buttonStylesLogin} variant="contained" onClick={handleLoginLogoutClick}>
+      <Button style={buttonStylesLogin} color="primary" size="small" variant="contained" onClick={handleLoginLogoutClick}>
         {isLoggedIn ? 'Profile' : 'Login'}
       </Button>
 
-      <Modal open={openModal || showInfo} onClose={handleClose}>
+      <Modal open={openModal} onClose={handleClose}>
         <Box sx={modalStyle}>
           <Box sx={contentStyle}>
             { showSignUp ? (

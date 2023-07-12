@@ -12,13 +12,14 @@ const OnboardingModal = ({ onClose }) => {
           transform: 'translate(-50%, -50%)',
           width: '50%',
           bgcolor: 'background.paper',
+          maxHeight: '80%',
+          overflow: 'auto',
           border: '2px solid #000',
           boxShadow: 24,
           p: 4,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
           borderRadius: '14px',
         }}
       >
@@ -29,7 +30,7 @@ const OnboardingModal = ({ onClose }) => {
           Thank you for joining our community! We're excited to have you on board.
         </Typography>
         <Typography variant="body2" component="div" marginBottom={'1rem'}>
-          Do you venture onto frozen ponds and lakes during the winter? Our app is designed to keep you informed of current ice levels on ponds/lakes of interest and to give you a platform to contribute valuable updates for fellow outdoor enthusiasts!
+          Do you venture onto frozen ponds and lakes during the winter? Our app is designed to keep you informed of current ice levels, and to give you a platform to contribute valuable updates for fellow outdoor enthusiasts!
         </Typography>
         <Typography variant="body2" component="div" fontWeight="bold" marginBottom={'0.25rem'}>
           Here are some key features to get you started:
@@ -44,7 +45,7 @@ const OnboardingModal = ({ onClose }) => {
           Happy exploring!
         </Typography>
 
-        <Button variant="contained" onClick={onClose}>
+        <Button variant="contained" size="small" onClick={onClose}>
           Close
         </Button>
       </Box>

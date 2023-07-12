@@ -1,7 +1,8 @@
-import React from 'react';
-import { Box, Card, Typography, Button } from '@mui/material';
+import React, { useContext } from 'react';
+import { Box, Card, Typography, Button, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import TextInputField from './TextInputField';
+import { UserContext } from '../../contexts/UserContext';
 
 const cardStyle = {
   padding: '1rem',
@@ -23,23 +24,24 @@ const formStyle = {
 };
 
 const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
-  const { control, handleSubmit, formState: { errors }, reset } = useForm();
+  const { control, handleSubmit, formState: { errors }, reset, register } = useForm();
+  const { user } = useContext(UserContext);
 
   const onSubmit = async (data) => {
     revertView();
     reset();
 
-    const { iceThickness, measurementMethod } = data;
+    const { iceThickness, additionalInfo } = data;
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
-    
 
     const update = {
       iceThickness,
-      measurementMethod,
+      additionalInfo,
       date,
       time,
       marker,
+      username: user ? user.userName : 'Guest',
     };
 
     await saveUserUpdate(update);
@@ -78,20 +80,26 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
           />
         </Box>
         <Box mb={1.5}>
-          <TextInputField
-            name="measurementMethod"
-            label={<Typography variant="body2">Measurement method</Typography>}
-            control={control}
-            errors={errors}
+          <TextField
+            name="additionalInfo"
+            label="Additional info (optional)"
+            multiline
+            rows={4}
+            variant="outlined"
+            size="small"
+            {...register('additionalInfo')}
           />
         </Box>
         <Box mb={1.5}>
-        <Typography variant="body1" component="p">
-  <span style={{ fontWeight: 'bold' }}>Date:</span> {new Date().toLocaleDateString()}
-</Typography>
-<Typography variant="body1" component="p">
-  <span style={{ fontWeight: 'bold' }}>Time:</span> {new Date().toLocaleTimeString()}
-</Typography>
+          <Typography variant="body1" component="p">
+            <span style={{ fontWeight: 'bold' }}>User:</span> {user ? user.userName : 'Guest'}
+          </Typography>
+          <Typography variant="body1" component="p">
+            <span style={{ fontWeight: 'bold' }}>Date:</span> {new Date().toLocaleDateString()}
+          </Typography>
+          <Typography variant="body1" component="p">
+            <span style={{ fontWeight: 'bold' }}>Time:</span> {new Date().toLocaleTimeString()}
+          </Typography>
         </Box>
         <Button variant="contained" color="primary" size="small" onClick={handleRevertAndSubmit}>
           Submit
@@ -102,6 +110,9 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
 };
 
 export default UserUpdate;
+
+
+
 
 
 

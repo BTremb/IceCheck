@@ -47,7 +47,7 @@ const UserPostDisplay = ({ markerPosition }) => {
                 <Typography variant="body2" component="p">
                   <span style={{ fontWeight: 'bold' }}>Time:</span> {update.time}
                 </Typography>
-                <Typography variant="body2" component="p">
+                <Typography variant="body2" component="p" sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
                   <span style={{ fontWeight: 'bold' }}>Additional info:</span>{' '}
                   {update.additionalInfo ? update.additionalInfo : 'None'}
                 </Typography>

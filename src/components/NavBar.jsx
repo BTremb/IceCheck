@@ -116,7 +116,7 @@ const NavBar = () => {
             <Box sx={{ textAlign: 'center', marginTop: '1rem' }}>
               {showSignUp ? (
                 <Typography variant="body2">
-                  Already have an account?{' '}
+                  Have an account?{' '}
                   <Link component="button" variant="body2" onClick={() => setShowSignUp(false)}>
                     Login
                   </Link>

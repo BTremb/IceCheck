@@ -62,7 +62,7 @@ const SignUp = () => {
         <Typography variant="h6" component="h2">
           Sign Up
         </Typography>
-      </Box>
+      <Typography variant="h6" component="h2" mb={3}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box mb={1.5}>
           <TextInputField name="email" label="Email" control={control} errors={errors} required />
@@ -76,7 +76,14 @@ const SignUp = () => {
           <TextInputField name="password" label="Password" control={control} errors={errors} required />
         </Box>
         <Box mb={1.5}>
-          <TextInputField name="userName" label="Username" control={control} errors={errors} required />
+          <TextInputField
+            name="userName"
+            label="Username"
+            control={control}
+            errors={errors}
+            required
+            maxLength={20}
+          />
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button variant="contained" color="primary" type="submit" size="small">
@@ -85,8 +92,8 @@ const SignUp = () => {
         </Box>
       </form>
       {isAccountCreated && (
-        <Typography variant="body2" color="textSecondary" align="center">
-          Account created!
+        <Typography variant="body1" align="center" marginTop={'1rem'}>
+          Account created! Please see login page.
         </Typography>
       )}
     </Card>
@@ -94,6 +101,7 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
 
 
 

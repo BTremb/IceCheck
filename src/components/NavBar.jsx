@@ -34,8 +34,8 @@ const NavBar = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#F5F5F5',
-    padding: '0.7rem',
+    backgroundColor: '#1F3F49',
+    padding: '0.3rem',
   };
 
   const [openModal, setOpenModal] = useState(false);
@@ -82,9 +82,6 @@ const NavBar = () => {
 
   const logoStyles = {
     flex: 1,
-    fontSize: '1.7rem',
-    fontWeight: 'bold',
-    color: '#000000',
     textAlign: 'center',
   };
 
@@ -96,7 +93,7 @@ const NavBar = () => {
 
   return (
     <nav style={navBarStyles}>
-      <div style={logoStyles}>IceCheck</div>
+      <div style={logoStyles}>  <img src="/logo-with-text.png" alt="Logo" style={{ height: '40px', width: 'auto' }} /></div>
       <Button style={buttonStylesLogin} color="primary" size="small" variant="contained" onClick={handleInfoClick}>
         Info
       </Button>

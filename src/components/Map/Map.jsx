@@ -187,8 +187,8 @@ const updateUserPost = (post) => {
           placeholder="Search for a location"
           style={{
             position: 'absolute',
-            top: '1rem',
-            left: '1rem',
+            top: '0.6rem',
+            left: '0.6rem',
             zIndex: 1,
             padding: '0.5rem',
           }}

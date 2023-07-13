@@ -1,5 +1,3 @@
-/** @format */
-
 import React from "react";
 import { Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
@@ -12,13 +10,14 @@ const TextInputField = ({
   errors,
   defaultValue = "",
   required = false,
+  maxLength,
 }) => {
   return (
     <Controller
       name={name}
       control={control}
       defaultValue={defaultValue}
-      rules={{ required: required }}
+      rules={{ required: required, maxLength: maxLength }} 
       render={({ field }) => (
         <TextField
           {...field}
@@ -26,6 +25,10 @@ const TextInputField = ({
           id={name}
           type={type}
           error={Boolean(errors[name])}
+          helperText={errors[name]?.type === "maxLength" && `Maximum length exceeded (${maxLength} characters)`}
+          inputProps={{
+            maxLength: maxLength,
+          }}
         />
       )}
     />
@@ -33,3 +36,5 @@ const TextInputField = ({
 };
 
 export default TextInputField;
+
+

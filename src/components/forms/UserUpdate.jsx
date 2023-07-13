@@ -76,6 +76,7 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
             label={<Typography variant="body2">Ice thickness (cm)*</Typography>}
             control={control}
             errors={errors}
+            maxLength={15}
             required
           />
         </Box>

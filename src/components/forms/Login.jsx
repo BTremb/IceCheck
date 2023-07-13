@@ -89,7 +89,7 @@ const LoginForm = () => {
           )}
         </Box>
         <Box mb={1.5}>
-          <TextInputField name="password" label="Password" register={register} control={control} errors={errors} required />
+          <TextInputField name="password" label="Password" type="password" register={register} control={control} errors={errors} required />
           {isIncorrectPassword && (
             <Typography variant="caption" color="error">
               Incorrect password. Please try again.

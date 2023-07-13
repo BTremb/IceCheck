@@ -121,7 +121,9 @@ const MapContainer = () => {
     }
   }, []);
 const updateUserPost = (post) => {
-  setUserPosts(userPosts.push(post));
+  let posts = userPosts
+  posts.push(post)
+  setUserPosts(posts)
 }
   
 
@@ -209,7 +211,7 @@ const updateUserPost = (post) => {
           <MarkerWithModal
             index={999999}
             position={markerPosition} 
-            userPostUpdate={updateUserPost}
+            updateUserPost={updateUserPost}
           />
         )}
         {userPosts.map((post, index) => (
@@ -217,7 +219,7 @@ const updateUserPost = (post) => {
          <MarkerWithModal 
          index={index}
          post={post}
-         userPostUpdate={updateUserPost}
+         updateUserPost={updateUserPost}
          />
 
         ))}

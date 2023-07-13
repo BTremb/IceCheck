@@ -23,7 +23,7 @@ const formStyle = {
   alignItems: 'center',
 };
 
-const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
+const UserUpdate = ({ marker, updateUserPost, revertView }) => {
   const { control, handleSubmit, formState: { errors }, reset, register } = useForm();
   const { user } = useContext(UserContext);
 
@@ -45,7 +45,7 @@ const UserUpdate = ({ marker, userPostUpdate, revertView }) => {
     };
 
     await saveUserUpdate(update);
-    userPostUpdate(update);
+    updateUserPost(update);
   };
 
   const saveUserUpdate = async (update) => {

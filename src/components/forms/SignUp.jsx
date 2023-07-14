@@ -20,7 +20,6 @@ const cardStyle = {
 
 const SignUp = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
-  const navigate = useNavigate();
   const [isProfileExist, setIsProfileExist] = useState(false);
   const [isAccountCreated, setIsAccountCreated] = useState(false);
 
@@ -58,12 +57,12 @@ const SignUp = () => {
 
   return (
     <Card sx={cardStyle}>
-      <Box mb={2}>
-        <Typography variant="h6" component="h2">
-          Sign Up
-        </Typography>
       <Typography variant="h6" component="h2" mb={3}>
+        Sign Up
+      </Typography>
+
       <form onSubmit={handleSubmit(onSubmit)}>
+
         <Box mb={1.5}>
           <TextInputField name="email" label="Email" control={control} errors={errors} required />
           {isProfileExist && (
@@ -72,25 +71,30 @@ const SignUp = () => {
             </Typography>
           )}
         </Box>
+
         <Box mb={1.5}>
-          <TextInputField name="password" label="Password" control={control} errors={errors} required />
+        <TextInputField name="password" label="Password" type="password" control={control} errors={errors} required />
         </Box>
+
         <Box mb={1.5}>
-          <TextInputField
-            name="userName"
-            label="Username"
-            control={control}
-            errors={errors}
-            required
-            maxLength={20}
-          />
-        </Box>
+        <TextInputField
+        name="userName"
+        label="Username"
+        control={control}
+        errors={errors}
+        required
+        maxLength={20}
+       />
+       </Box>
+
+
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button variant="contained" color="primary" type="submit" size="small">
             Submit
           </Button>
         </Box>
       </form>
+      
       {isAccountCreated && (
         <Typography variant="body1" align="center" marginTop={'1rem'}>
           Account created! Please see login page.

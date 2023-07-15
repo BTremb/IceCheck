@@ -14,6 +14,6 @@ You can try it out at https://btremb.github.io/IceCheck/
 
 
 
-![(IceCheckScreenshot.png)
+![](IceCheckScreenshot.png)
 
 

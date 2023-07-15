@@ -93,7 +93,7 @@ const NavBar = () => {
 
   return (
     <nav style={navBarStyles}>
-      <div style={logoStyles}>  <img src="/logo-with-text.png" alt="Logo" style={{ height: '37px', width: 'auto' }} /></div>
+      <div style={logoStyles}>  <img src="/logo-with-text.png" alt="Logo" style={{ height: '35px', width: 'auto' }} /></div>
       <Button style={buttonStylesLogin} color="primary" size="small" variant="contained" onClick={handleInfoClick}>
         Info
       </Button>

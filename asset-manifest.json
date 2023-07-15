@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/btremb.github.io/MapView/static/css/main.073c9b0a.css",
-    "main.js": "/btremb.github.io/MapView/static/js/main.08e60949.js",
-    "index.html": "/btremb.github.io/MapView/index.html",
-    "main.073c9b0a.css.map": "/btremb.github.io/MapView/static/css/main.073c9b0a.css.map",
-    "main.08e60949.js.map": "/btremb.github.io/MapView/static/js/main.08e60949.js.map"
+    "main.css": "/btremb.github.io/IceCheck/static/css/main.073c9b0a.css",
+    "main.js": "/btremb.github.io/IceCheck/static/js/main.08e60949.js",
+    "index.html": "/btremb.github.io/IceCheck/index.html",
+    "main.073c9b0a.css.map": "/btremb.github.io/IceCheck/static/css/main.073c9b0a.css.map",
+    "main.08e60949.js.map": "/btremb.github.io/IceCheck/static/js/main.08e60949.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",

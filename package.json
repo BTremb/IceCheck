@@ -1,8 +1,8 @@
 {
-  
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://btremb.github.io/IceCheck/",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
@@ -19,8 +19,7 @@
     "react-hook-form": "^7.43.9",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "homepage": "https://btremb.github.io/IceCheck/"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "predeploy": "npm run build",

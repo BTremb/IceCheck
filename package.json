@@ -1,8 +1,8 @@
 {
-  "homepage": "BTremb.github.io/IceCheck", 
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://btremb.github.io/IceCheck/",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",

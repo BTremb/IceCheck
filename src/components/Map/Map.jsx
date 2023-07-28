@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Autocomplete, Marker } from '@react-google-maps/api';
-import { Button, Modal, Typography, Box, Link } from '@mui/material';
+import { Button, Modal, Typography, Box, Link, TextField } from '@mui/material'; // Import TextField
 import UserUpdate from '../forms/UserUpdate';
 import UserPostDisplay from '../forms/UserPostDisplay';
 import MarkerWithModal from './MarkerWithModal';
@@ -177,24 +177,32 @@ const updateUserPost = (post) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU" libraries={libraries}>
+    <LoadScript
+      googleMapsApiKey="AIzaSyDeSSwZVieES0TducS45tlAyA96lpN3glU"
+      libraries={libraries}
+    >
       <Autocomplete
         onLoad={(autocomplete) => {
           autocompleteRef.current = autocomplete;
         }}
         onPlaceChanged={handlePlaceSelect}
       >
-        <input
-          type="text"
-          placeholder="Search for a location"
-          style={{
-            position: 'absolute',
-            top: '0.5rem',
-            left: '0.5rem',
-            zIndex: 1,
-            padding: '0.5rem',
-          }}
-        />
+        {/* Replace the regular input element with the TextField component */}
+        <TextField
+  label="Search for a location"
+  variant="outlined"
+  style={{
+    position: 'absolute',
+    top: '0.5rem',
+    left: '0.5rem',
+    zIndex: 1,
+    padding: '0.5rem',
+    backgroundColor: '#ffffff',
+    height: '2rem', // Adjust the height as needed
+  }}
+/>
+
+
       </Autocomplete>
       <GoogleMap
         onLoad={(map) => {

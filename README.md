@@ -43,7 +43,7 @@ Once the `node_modules` are installed, run
 
     npm start
 
-_**Please Note:** This app is still in development, and currently only works off of local storage
+_**Please Note:** This app is still in development, and currently only works off of local storage_
 
 ---
 

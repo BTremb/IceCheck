@@ -15,7 +15,7 @@ Here are some key features to get you started:
 
 ### **Motivation**
 
-When I was growing up, I would often go ice skating during the winter. Me and my friends were always eager to get out on the ponds, but it was always hard to know if they were frozen enough. Thinking of this issue later in life, I realized that there was still no real resource you could use to find information about current ice levels on ponds in the winter, apart from word of mouth. 
+When I was growing up, I would often go ice skating during the winter. Me and my friends were always eager to get out on the ponds, but it was always hard to know if they were frozen enough. Thinking of this issue later in life, I realized that there was still no real resource you could use to find information about current ice levels, apart from word of mouth. 
 
 ---
 

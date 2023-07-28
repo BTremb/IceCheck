@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import MapView from './components/Map/MapView';
 import ProfilePage from './components/forms/UserProfile';
 import { UserProvider } from './contexts/UserContext';
 
-const IceCheck = () => {
+const App = () => {
   return (
     <UserProvider>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <NavBar />
         <Routes>
           <Route path="/" element={<MapView />} />
@@ -20,5 +20,5 @@ const IceCheck = () => {
   );
 };
 
-export default IceCheck;
+export default App;
 

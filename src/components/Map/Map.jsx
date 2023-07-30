@@ -189,7 +189,7 @@ const updateUserPost = (post) => {
       >
         <TextField
       label="Search for a location"
-      variant="outlined"
+      variant="filled"
       style={{ position: 'absolute',
       top: '0.02rem',
       left: '0.2rem',
@@ -199,7 +199,7 @@ const updateUserPost = (post) => {
       InputLabelProps={{
         style: {
           
-          fontSize: 13,
+          fontSize: 12,
           backgroundColor:'#ffffff',
           paddingLeft: 4,
           paddingRight: 4,
@@ -209,9 +209,9 @@ const updateUserPost = (post) => {
       inputProps={{
         style: {
           backgroundColor: '#ffffff',
-          fontSize: 11,
+          fontSize: 16,
           height: 35,
-          width: 200,
+          width: 210,
           
           padding: '1.5px',
           fontWeight: 'bold'

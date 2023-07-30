@@ -187,20 +187,56 @@ const updateUserPost = (post) => {
         }}
         onPlaceChanged={handlePlaceSelect}
       >
-        {/* Replace the regular input element with the TextField component */}
         <TextField
+      label="Search for a location"
+      variant="filled"
+      style={{ position: 'absolute',
+      top: '0.02rem',
+      left: '0.2rem',
+      zIndex: 1,
+      padding: '0.5rem',
+    }}
+      InputLabelProps={{
+        style: {
+          
+          fontSize: 13,
+          backgroundColor:'#ffffff',
+          paddingLeft: 4,
+          paddingRight: 4,
+          color: '#383838',
+        },
+      }}
+      inputProps={{
+        style: {
+          backgroundColor: '#ffffff',
+          fontSize: 11,
+          height: 35,
+          width: 180,
+          
+          padding: '1.5px',
+          fontWeight: 'bold'
+         
+        },
+    }}
+    />
+
+       {/* <TextField
   label="Search for a location"
-  variant="outlined"
+  variant="filled"
   style={{
     position: 'absolute',
-    top: '0.5rem',
+    top: '0.1rem',
     left: '0.5rem',
     zIndex: 1,
-    padding: '0.5rem',
+    padding: '0.2rem',
     backgroundColor: '#ffffff',
-    height: '2rem', // Adjust the height as needed
+    height: '30px',
+    width: '200px', // Adjust the width as needed
+    borderRadius: '2px', // Adjust the borderRadius to match the outline
+    margin: '0.5rem', // Add some margin to create space from the map
   }}
-/>
+/> */}
+
 
 
       </Autocomplete>

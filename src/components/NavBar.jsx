@@ -35,7 +35,7 @@ const NavBar = () => {
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#1F3F49',
-    padding: '0.3rem',
+    padding: '0.4rem',
   };
 
   const [openModal, setOpenModal] = useState(false);

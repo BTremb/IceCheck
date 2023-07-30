@@ -214,7 +214,7 @@ const updateUserPost = (post) => {
           width: 210,
           
           padding: '1.5px',
-          fontWeight: 'bold'
+          
          
         },
     }}

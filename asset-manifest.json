@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/IceCheck/static/css/main.073c9b0a.css",
-    "main.js": "/IceCheck/static/js/main.fce38385.js",
+    "main.js": "/IceCheck/static/js/main.bc8d9b9f.js",
     "index.html": "/IceCheck/index.html",
     "main.073c9b0a.css.map": "/IceCheck/static/css/main.073c9b0a.css.map",
-    "main.fce38385.js.map": "/IceCheck/static/js/main.fce38385.js.map"
+    "main.bc8d9b9f.js.map": "/IceCheck/static/js/main.bc8d9b9f.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.fce38385.js"
+    "static/js/main.bc8d9b9f.js"
   ]
 }

@@ -189,7 +189,7 @@ const updateUserPost = (post) => {
       >
         <TextField
       label="Search for a location"
-      variant="filled"
+      variant="outlined"
       style={{ position: 'absolute',
       top: '0.02rem',
       left: '0.2rem',
@@ -211,7 +211,7 @@ const updateUserPost = (post) => {
           backgroundColor: '#ffffff',
           fontSize: 11,
           height: 35,
-          width: 180,
+          width: 200,
           
           padding: '1.5px',
           fontWeight: 'bold'
@@ -220,22 +220,7 @@ const updateUserPost = (post) => {
     }}
     />
 
-       {/* <TextField
-  label="Search for a location"
-  variant="filled"
-  style={{
-    position: 'absolute',
-    top: '0.1rem',
-    left: '0.5rem',
-    zIndex: 1,
-    padding: '0.2rem',
-    backgroundColor: '#ffffff',
-    height: '30px',
-    width: '200px', // Adjust the width as needed
-    borderRadius: '2px', // Adjust the borderRadius to match the outline
-    margin: '0.5rem', // Add some margin to create space from the map
-  }}
-/> */}
+ 
 
 
 

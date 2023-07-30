@@ -36,7 +36,7 @@ const OnboardingModal = ({ onClose }) => {
           Here are some key features to get you started:
         </Typography>
         <Typography variant="body2" component="div">
-          - Discover nearby ponds/lakes and explore recent updates of ice thickness. To view current updates, click on the red markers displayed on the map. Here you also have the option to create your own posts.
+          - To view current updates, click on the red markers displayed on the map. Here you also have the option to create your own posts.
         </Typography>
         <Typography variant="body2" component="div" marginBottom={'2rem'}>
           - If a pond or lake doesn't have any current updates, but you would like to make one, you can search for the desired location in the top left corner, and this will give you the option to make a post.

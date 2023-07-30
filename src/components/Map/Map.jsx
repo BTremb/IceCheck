@@ -211,7 +211,7 @@ const updateUserPost = (post) => {
           backgroundColor: '#ffffff',
           fontSize: 16,
           height: 35,
-          width: 210,
+          width: 192,
           
           padding: '1.5px',
           
